@@ -1,0 +1,15 @@
+flowchart TD
+    A["Request arrives at Controller (/webhook)"] --> B["UpdateDispatcher"]
+    
+    B --> C1["MessageProcessor"]
+    B --> C2["CallbackQueryProcessor"]
+    B --> C3["MyChatMemberProcessor"]
+
+    C1 --> D1["Routing via messageActionMap"]
+    D1 --> E1["Correct Service"]
+
+    C2 --> D2["Routing via callbackActionMap"]
+    D2 --> E2["Correct Service"]
+
+    C3 --> D3["Call ChatMemberUpdatedService to update status
+                (member o kicked)"]

@@ -1,0 +1,28 @@
+flowchart LR
+    subgraph TG[Telegram Servers]
+        T1["Telegram Server"]
+    end
+
+    subgraph NGINX[Nginx Reverse Proxy]
+        W1["Listener :80 /webhook"]
+        W2["Listener :9090 /API proxy"]
+    end
+
+    subgraph SB[Spring Boot Cluster]
+        S1["Spring Boot Instance 1 (8081)"]
+        S2["Spring Boot Instance 2 (8082)"]
+    end
+
+    %% Inbound Webhooks
+    T1 --> W1
+
+    %% Load balancing
+    W1 --> S1
+    W1 --> S2
+
+    %% Outbound API calls
+    S1 --> W2
+    S2 --> W2
+
+    %% Proxy to Telegram API
+    W2 --> T1

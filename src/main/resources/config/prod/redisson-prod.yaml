@@ -1,0 +1,9 @@
+singleServerConfig:
+  address: "redis://redis-18995.c135.eu-central-1-1.ec2.redns.redis-cloud.com:18995"
+  username: ${REDIS_USERNAME}
+  password: ${REDIS_PASSWORD}
+  connectionMinimumIdleSize: 4
+  connectionPoolSize: 16
+  subscriptionConnectionPoolSize: 2
+  idleConnectionTimeout: 30000 #ms
+

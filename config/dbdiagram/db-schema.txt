@@ -1,0 +1,62 @@
+Table USER {
+  id bigint [pk, increment]
+  telegram_id bigint [unique, not null]
+  user_role varchar [not null]
+}
+
+Table CHAT {
+  id bigint [pk, increment]
+  telegram_id bigint [not null]
+  type varchar [not null]
+  user_id bigint [not null, unique]
+}
+
+Table COOLDOWN {
+  id bigint [pk, increment]
+  type varchar [not null]
+  ending_time timestamp [not null]
+  user_id bigint [not null]
+}
+
+Table AUTHOR {
+  id bigint [pk, increment]
+  first_name varchar [not null]
+  last_name varchar [not null]
+}
+
+Table PHRASE {
+  id bigint [pk, increment]
+  author_id bigint [not null]
+  text varchar(1024) [not null]
+  type varchar [not null]
+  disabled boolean
+}
+
+Table USER_PHRASE {
+  user_id bigint [not null]
+  phrase_id bigint [not null]
+  read boolean [not null]
+  read_count int
+  indexes {
+    (user_id, phrase_id) [pk]
+  }
+}
+
+Table PHRASE_SENT_HISTORY {
+  id bigint [pk, increment]
+  phrase_id bigint [not null]
+  user_id bigint [not null]
+  sending_date timestamp [not null]
+}
+
+Table TELEGRAM_FILE {
+  id bigint [pk, increment]
+  name varchar [not null, unique]
+  telegram_id varchar [not null]
+}
+
+Ref: CHAT.user_id > USER.id
+Ref: COOLDOWN.user_id > USER.id
+Ref: USER_PHRASE.user_id > USER.id
+Ref: USER_PHRASE.phrase_id > PHRASE.id
+Ref: PHRASE.author_id > AUTHOR.id

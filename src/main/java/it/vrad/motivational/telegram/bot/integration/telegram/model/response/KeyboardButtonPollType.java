@@ -1,0 +1,8 @@
+package it.vrad.motivational.telegram.bot.integration.telegram.model.response;
+
+import lombok.Data;
+
+@Data
+public class KeyboardButtonPollType {
+    private String type;
+}
