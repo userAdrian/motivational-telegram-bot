@@ -48,6 +48,7 @@ Telegram bot developed in **Java + Spring Boot**, which sends motivational quote
 
 ### 🌐 Network Architecture
 ![Architecture](docs/images/mermaid/architecture-flowchart.png)
+*Source: [network-architecture-flowchart](config/mermaid/network-architecture-flowchart.txt)*
 
 #### Technical Details
 - **Nginx**
