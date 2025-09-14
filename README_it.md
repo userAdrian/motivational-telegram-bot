@@ -43,12 +43,12 @@ Bot Telegram sviluppato in **Java + Spring Boot**, che invia frasi motivazionali
 - Questo permette di ricevere aggiornamenti in tempo reale senza fare polling continuo.
 
 ### 🔄 Flusso delle richieste
-![SD-Requests](docs/images/mermaid/request-sequence-diagram.png)
-*Fonte: [request-sequence-diagram](config/mermaid/request-sequence-diagram.txt)*
+![SD-Requests](docs/mermaid/images/request-sequence-diagram.png)
+*Fonte: [request-sequence-diagram](docs/mermaid/request-sequence-diagram.txt)*
 
 ### 🌐 Architettura di rete
-![Architecture](docs/images/mermaid/architecture-flowchart.png)
-*Fonte: [network-architecture-flowchart](config/mermaid/network-architecture-flowchart.txt)*
+![Architecture](docs/mermaid/images/network-architecture-flowchart.png)
+*Fonte: [network-architecture-flowchart](docs/mermaid/network-architecture-flowchart.txt)*
 
 #### Dettagli tecnici
 - **Nginx**
@@ -147,8 +147,8 @@ motivational-telegram-bot/
 │── README.md           # Documentazione del progetto
 ```
 ### Flusso Telegram Update
-![update-flowchart](docs/images/mermaid/update-flowchart.png)  
-*Fonte: [update-flowchart](config/mermaid/update-flowchart.txt)*
+![update-flowchart](docs/mermaid/images/update-flowchart.png)  
+*Fonte: [update-flowchart](docs/mermaid/update-flowchart.txt)*
 
 #### Dettagli tecnici
 - L’`UpdateDispatcher` è definito in [`DispatcherConfig.updateDispatcher`](src/main/java/it/vrad/motivational/telegram/bot/config/DispatcherConfig.java)
@@ -160,8 +160,8 @@ motivational-telegram-bot/
     - **`callbackActionMap`**
 
 ### Schema del database
-![db-schema](docs/images/dbdiagram/db-schema.png)
-*Fonte: [db-schema](config/dbdiagram/db-schema.txt)*
+![db-schema](docs/dbdiagram/images/db-schema.png)
+*Fonte: [db-schema](docs/dbdiagram/db-schema.txt)*
 
 #### Note sulle entità
 - **`user_phrase`**
