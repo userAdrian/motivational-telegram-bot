@@ -69,35 +69,4 @@ public class UserDtoUtility {
         return user;
     }
 
-    /**
-     * Finds a valid user by telegramUserId if the given userDto is null.
-     * <br>See also {@link UserService#findValidUser(Long)}
-     *
-     * @param userDto        the user DTO (may be null)
-     * @param userService    the user service
-     * @param telegramUserId the Telegram user ID
-     * @return valid user DTO
-     */
-    public static UserDto findValidUserIfAbsent(UserDto userDto, UserService userService, Long telegramUserId) {
-        if (userDto != null) {
-            return userDto;
-        }
-
-        return userService.findValidUser(telegramUserId);
-    }
-
-    /**
-     * Finds a valid user using IncomingMessageContext and Message.
-     * <p>
-     * See also {@link UserDtoUtility#findValidUserIfAbsent(UserDto, UserService, Long)}
-     *
-     * @param incomingMessageContext context containing user from DB
-     * @param userService            the user service
-     * @param message                the Telegram message
-     * @return valid user DTO
-     * @throws UserNotValidException if user is not valid
-     */
-    public static UserDto findValidUserIfAbsent(IncomingMessageContext incomingMessageContext, UserService userService, Message message) {
-        return findValidUserIfAbsent(incomingMessageContext.getUserFromDB(), userService, MessageUtility.getUserId(message));
-    }
 }

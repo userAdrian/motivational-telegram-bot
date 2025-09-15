@@ -55,7 +55,7 @@ public class PhraseMessageServiceImpl implements PhraseMessageService {
         Message message = incomingMessageContext.getMessageSent();
 
         // Retrieve valid user
-        UserDto user = UserDtoUtility.findValidUserIfAbsent(incomingMessageContext, userService, message);
+        UserDto user = userService.findValidUserIfAbsent(incomingMessageContext, message);
 
         // Check if the user does not have any of the roles that skip cooldown
         boolean cooldownActiveCheck = user.matchesNoRole(commandProperties.getSkipCooldownRoles());

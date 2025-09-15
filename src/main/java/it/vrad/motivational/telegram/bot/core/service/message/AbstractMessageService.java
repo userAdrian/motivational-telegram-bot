@@ -143,7 +143,7 @@ public abstract class AbstractMessageService {
     /**
      * Retrieves the {@link UserDto} from the incoming message context.
      * <p>
-     * Uses {@link UserDtoUtility#findValidUserIfAbsent(IncomingMessageContext, UserService, Message)}
+     * Uses {@link UserService#findValidUserIfAbsent(UserDto, Long)}
      * to find or validate the user.
      *
      * @param incomingMessageContext the context of the incoming message
@@ -151,7 +151,7 @@ public abstract class AbstractMessageService {
      * @return the UserDto for the message sender
      */
     protected UserDto getUserDto(IncomingMessageContext incomingMessageContext, Message message) {
-        return UserDtoUtility.findValidUserIfAbsent(incomingMessageContext, userService, message);
+        return userService.findValidUserIfAbsent(incomingMessageContext, message);
     }
 
     /**

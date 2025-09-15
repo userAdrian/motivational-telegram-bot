@@ -2,9 +2,9 @@ package it.vrad.motivational.telegram.bot.core.service.user.impl;
 
 import it.vrad.motivational.telegram.bot.core.exception.NoSuchUserException;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.UserDao;
 import it.vrad.motivational.telegram.bot.core.service.user.UserService;
 import it.vrad.motivational.telegram.bot.core.util.UserDtoUtility;
+import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.UserDao;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,4 +41,21 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param userDto        {@inheritDoc}
+     * @param telegramUserId {@inheritDoc}
+     * @return {@inheritDoc}
+     */
+    @Override
+    public UserDto findValidUserIfAbsent(UserDto userDto, Long telegramUserId) {
+        if (userDto != null) {
+            return userDto;
+        }
+
+        return findValidUser(telegramUserId);
+    }
+
 }
