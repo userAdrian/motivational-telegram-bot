@@ -178,3 +178,6 @@ motivational-telegram-bot/
 - 🔜 Command to promote a user to admin without modifying the DB.
 - 🔜 Dynamic configuration of times and cooldowns.
 - 🔜 User-customizable time zone.
+- 🔜 Refactor orchestrating services into **Facade + smaller, focused services**:
+    - Example: split `InitialMessageServiceImpl` and `PhraseMessageServiceImpl` into a **Facade** that orchestrates multiple smaller services (e.g., UserManagementService, PhraseDeliveryService, CooldownManager, TelegramService).
+    - Goal: improve maintainability, testability, and separation of concerns.

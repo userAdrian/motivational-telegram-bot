@@ -58,17 +58,17 @@ public class PhraseMessageServiceImpl implements PhraseMessageService {
         UserDto user = userService.findValidUserIfAbsent(incomingMessageContext, message);
 
         // Check if the user does not have any of the roles that skip cooldown
-        boolean cooldownActiveCheck = user.matchesNoRole(commandProperties.getSkipCooldownRoles());
+        boolean applyCooldown = user.matchesNoRole(commandProperties.getSkipCooldownRoles());
 
         Long userId = user.getId();
         // Retrieve cooldown if applicable
-        Optional<CooldownDto> cooldownOpt = getRandomPhraseCooldown(userId, cooldownActiveCheck);
+        Optional<CooldownDto> cooldownOpt = getRandomPhraseCooldown(userId, applyCooldown);
 
         // Process and send a random phrase to the user
         processAndSendRandomPhrase(userId, message, user);
 
         Long cooldownId = cooldownOpt.map(CooldownDto::getId).orElse(null);
-        handleCooldown(cooldownActiveCheck, cooldownId, user);
+        handleCooldown(applyCooldown, cooldownId, user);
 
         return null;
     }
@@ -100,9 +100,9 @@ public class PhraseMessageServiceImpl implements PhraseMessageService {
                 .orElseThrow(() -> new NoSuchPhraseException(ExceptionMessageConstants.LOG_NO_PHRASES_FOUND_MESSAGE));
     }
 
-    private void handleCooldown(boolean cooldownActiveCheck, Long cooldownId, UserDto user) {
+    private void handleCooldown(boolean applyCooldown, Long cooldownId, UserDto user) {
         // Apply cooldown if the user does not have a role that skips it
-        if (cooldownActiveCheck) {
+        if (applyCooldown) {
             cooldownService.updateCooldownEndingDate(cooldownId, user, CooldownType.RANDOM_PHRASE);
         }
     }
@@ -111,11 +111,11 @@ public class PhraseMessageServiceImpl implements PhraseMessageService {
      * Retrieves the cooldown for the random phrase command for the user with ID {@code userId}.
      *
      * @param userId                  the ID of the user
-     * @param skipCooldownActiveCheck whether to skip cooldown check
+     * @param applyCooldown whether to apply cooldown check
      * @return an Optional containing the cooldown if found
      */
-    private Optional<CooldownDto> getRandomPhraseCooldown(Long userId, boolean skipCooldownActiveCheck) {
-        return cooldownService.findCooldownByUserIdAndType(userId, CooldownType.RANDOM_PHRASE, skipCooldownActiveCheck);
+    private Optional<CooldownDto> getRandomPhraseCooldown(Long userId, boolean applyCooldown) {
+        return cooldownService.findCooldownByUserIdAndType(userId, CooldownType.RANDOM_PHRASE, applyCooldown);
     }
 
 }

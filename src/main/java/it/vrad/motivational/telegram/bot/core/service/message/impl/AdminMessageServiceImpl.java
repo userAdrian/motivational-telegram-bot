@@ -103,7 +103,7 @@ public class AdminMessageServiceImpl extends AbstractMessageService implements A
         Message message = incomingMessageContext.getMessageSent();
 
         // Validate user roles for loading file phrases command
-        getUserValidatedForLoadFilePhrases(incomingMessageContext);
+        validateUserForLoadFilePhrases(incomingMessageContext);
 
         Long chatId = MessageUtility.getChatId(message);
 
@@ -119,7 +119,7 @@ public class AdminMessageServiceImpl extends AbstractMessageService implements A
         return null;
     }
 
-    private void getUserValidatedForLoadFilePhrases(IncomingMessageContext incomingMessageContext) {
+    private void validateUserForLoadFilePhrases(IncomingMessageContext incomingMessageContext) {
         Set<UserRole> commandAuthRoles = commandProperties.getAuthorizedRolesForCommand(CommandConstants.LoadFilePhrases.TEXT);
         validateAndGetUserDto(incomingMessageContext, commandAuthRoles);
     }
@@ -136,7 +136,7 @@ public class AdminMessageServiceImpl extends AbstractMessageService implements A
 
         Message message = incomingMessageContext.getMessageSent();
         // Validate user roles for loading file phrases command
-        getUserValidatedForLoadFilePhrases(incomingMessageContext);
+        validateUserForLoadFilePhrases(incomingMessageContext);
 
         Long chatId = MessageUtility.getChatId(message);
 

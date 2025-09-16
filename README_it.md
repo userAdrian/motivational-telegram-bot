@@ -93,7 +93,7 @@ Bot Telegram sviluppato in **Java + Spring Boot**, che invia frasi motivazionali
 ### 2. Profili disponibili
 Il progetto supporta due profili: `dev` e `prod`.  
 Il profilo da usare va indicato tramite la variabile d'ambiente:
-```bash
+```
 SPRING_PROFILES_ACTIVE=dev   # oppure prod
 ```
 
@@ -107,7 +107,7 @@ SPRING_PROFILES_ACTIVE=dev   # oppure prod
 #### Profilo `prod`
 - Configurazione principale in `application-prod.properties`.  
 - Oltre a impostare il profilo tramite `SPRING_PROFILES_ACTIVE=prod`, è necessario specificare le credenziali per Redis e per il database tramite variabili d'ambiente:  
-  ```bash
+  ```
   REDIS_USERNAME=<username_redis>
   REDIS_PASSWORD=<password_redis>
   DB_USERNAME=<username_db>
@@ -178,3 +178,6 @@ motivational-telegram-bot/
 - 🔜 Comando per promuovere un utente ad admin senza modificare il DB.
 - 🔜 Configurazione dinamica di orari e cooldown.
 - 🔜 Time zone personalizzabile dall’utente.
+- 🔜 Rifattorizzare i servizi orchestratori in **Facade + servizi più piccoli e focalizzati**:
+    - Esempio: dividere `InitialMessageServiceImpl` e `PhraseMessageServiceImpl` in una **Facade** che orchestra diversi servizi più piccoli (es. `UserManagementService`, `PhraseDeliveryService`, `CooldownManager`, `TelegramService`).
+    - Obiettivo: migliorare manutenibilità, testabilità e separazione delle responsabilità.
