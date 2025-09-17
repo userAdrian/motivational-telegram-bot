@@ -74,7 +74,10 @@ public class AdminMessageServiceImpl extends AbstractMessageService implements A
 
         // Build and send admin page message
         MessageDto messageDto = generateMessageDto(user);
-        telegramIntegrationApi.editMessageMedia(TelegramApiRequestUtility.getEditMessageMediaPhotoRequest(message, messageDto));
+        Message sentMessage = telegramIntegrationApi.editMessageMedia(TelegramApiRequestUtility.getEditMessageMediaPhotoRequest(message, messageDto));
+
+        // Persist Telegram file info after sending
+        persistTelegramFile(PageConstants.AdminPage.MESSAGE_PHOTO_CLASSPATH, sentMessage, messageDto.getTelegramFileId());
 
         return null;
     }
