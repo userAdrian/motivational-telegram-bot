@@ -139,6 +139,7 @@ motivational-telegram-bot/
 │   ├── core/           # Main business logic
 │   ├── infrastructure/ # Technical support services
 │   ├── integration/    # Communication with external services (Telegram, API)
+│   ├── shared/         # Common utilities and reusable components across the project
 │
 │── database/           # SQL scripts for DB creation
 │── config/             # Any extra configuration
@@ -176,8 +177,5 @@ motivational-telegram-bot/
 
 ## 🚀 Future Ideas
 - 🔜 Command to promote a user to admin without modifying the DB.
-- 🔜 Dynamic configuration of times and cooldowns.
+- 🔜 Dynamic configuration of phrase sending times.
 - 🔜 User-customizable time zone.
-- 🔜 Refactor orchestrating services into **Facade + smaller, focused services**:
-    - Example: split `InitialMessageServiceImpl` and `PhraseMessageServiceImpl` into a **Facade** that orchestrates multiple smaller services (e.g., UserManagementService, PhraseDeliveryService, CooldownManager, TelegramService).
-    - Goal: improve maintainability, testability, and separation of concerns.
