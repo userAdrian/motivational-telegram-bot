@@ -1,0 +1,28 @@
+{
+  "update_id": 93713903,
+  "message": {
+    "message_id": 2721,
+    "from": {
+      "id": 88328,
+      "is_bot": false,
+      "first_name": "foo",
+      "username": "foobar",
+      "language_code": "en"
+    },
+    "chat": {
+      "id": 88328,
+      "first_name": "foo",
+      "username": "foobar",
+      "type": "private"
+    },
+    "date": 1758228648,
+    "text": "/start",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 6,
+        "type": "bot_command"
+      }
+    ]
+  }
+}

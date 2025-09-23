@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "result": {
+    "message_id": 2717,
+    "from": {
+      "id": 9876,
+      "is_bot": true,
+      "first_name": "Motivational Reminder Bot",
+      "username": "usernameBot"
+    },
+    "chat": {
+      "id": 1234,
+      "first_name": "foo",
+      "username": "foobar",
+      "type": "private"
+    },
+    "date": 1758105822,
+    "photo": [
+      {
+        "file_id": "AgACAgQAAxkDAAIKiWjKkMo4hDGg747nMqCWtpwRf70HAAI7yjEbhPNQUqqu4nTrELaaAQADAgADcwADNgQ",
+        "file_unique_id": "AQADO8oxG4TzUFJ4",
+        "file_size": 1573,
+        "width": 90,
+        "height": 70
+      },
+      {
+        "file_id": "AgACAgQAAxkDAAIKiWjKkMo4hDGg747nMqCWtpwRf70HAAI7yjEbhPNQUqqu4nTrELaaAQADAgADbQADNgQ",
+        "file_unique_id": "AQADO8oxG4TzUFJy",
+        "file_size": 18372,
+        "width": 320,
+        "height": 249
+      },
+      {
+        "file_id": "AgACAgQAAxkDAAIKiWjKkMo4hDGg747nMqCWtpwRf70HAAI7yjEbhPNQUqqu4nTrELaaAQADAgADeAADNgQ",
+        "file_unique_id": "AQADO8oxG4TzUFJ9",
+        "file_size": 72933,
+        "width": 800,
+        "height": 622
+      },
+      {
+        "file_id": "AgACAgQAAxkDAAIKiWjKkMo4hDGg747nMqCWtpwRf70HAAI7yjEbhPNQUqqu4nTrELaaAQADAgADeQADNgQ",
+        "file_unique_id": "AQADO8oxG4TzUFJ-",
+        "file_size": 146928,
+        "width": 1280,
+        "height": 996
+      },
+      {
+        "file_id": "AgACAgQAAxkDAAIKiWjKkMo4hDGg747nMqCWtpwRf70HAAI7yjEbhPNQUqqu4nTrELaaAQADAgADdwADNgQ",
+        "file_unique_id": "AQADO8oxG4TzUFJ8",
+        "file_size": 355141,
+        "width": 2304,
+        "height": 1792
+      }
+    ],
+    "caption": "text message",
+    "reply_markup": {
+      "inline_keyboard": [
+        [
+          {
+            "callback_data": "callbackData1",
+            "text": "button1"
+          }
+        ],
+        [
+          {
+            "callback_data": "callbackData2",
+            "text": "button2"
+          },
+          {
+            "callback_data": "callbackData3",
+            "text": "button3"
+          }
+        ]
+      ]
+    }
+  }
+}
