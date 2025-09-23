@@ -29,6 +29,7 @@ public class CommandConstants {
         public static final String TEXT = "/loadfilephrases";
         public static final String MESSAGE_PROPERTY = "motivational.telegram.bot.messages.command.load-file-phrases";
         public static final String MESSAGE_PROPERTY_STEP_ONE = "motivational.telegram.bot.messages.command.load-file-phrases.step-one";
+        public static final String FILE_MIME_TYPE = "text/csv";
     }
     //END ---> COMMANDS
 

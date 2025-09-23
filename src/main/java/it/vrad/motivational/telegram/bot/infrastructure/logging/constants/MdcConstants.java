@@ -1,4 +1,4 @@
-package it.vrad.motivational.telegram.bot.infrastructure.web.constants;
+package it.vrad.motivational.telegram.bot.infrastructure.logging.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

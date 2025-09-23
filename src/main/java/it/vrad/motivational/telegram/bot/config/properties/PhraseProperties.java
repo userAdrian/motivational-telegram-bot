@@ -26,7 +26,7 @@ public class PhraseProperties {
     @NotNull
     private ZoneId timeZone;
 
-    private int schedulerRetryInterval;
-    private int schedulerMaxRetryDuration;
+    private int schedulerDelayIncrement;
+    private int schedulerMaxDelay;
     private long schedulerLockLeaseTime;
 }

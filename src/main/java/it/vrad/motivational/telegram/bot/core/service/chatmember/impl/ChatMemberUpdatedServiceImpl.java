@@ -1,5 +1,6 @@
 package it.vrad.motivational.telegram.bot.core.service.chatmember.impl;
 
+import it.vrad.motivational.telegram.bot.core.exception.NoSuchUserException;
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.UserRole;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.ChatMember;
@@ -29,7 +30,7 @@ public class ChatMemberUpdatedServiceImpl implements ChatMemberUpdatedService {
      * @param chatMemberUpdated {@inheritDoc}
      */
     @Override
-    public void updateUserStatus(ChatMemberUpdated chatMemberUpdated) {
+    public void updateUserStatus(ChatMemberUpdated chatMemberUpdated) throws NoSuchUserException {
         Objects.requireNonNull(chatMemberUpdated);
         ChatMember newChatMember = Objects.requireNonNull(chatMemberUpdated.getNewChatMember());
 
@@ -42,6 +43,6 @@ public class ChatMemberUpdatedServiceImpl implements ChatMemberUpdatedService {
                 .build();
 
         // Update the user in the database with the new role
-        userDao.updateUser(telegramId, userDto);
+        userDao.update(telegramId, userDto);
     }
 }

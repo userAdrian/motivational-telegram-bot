@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ReservedCommandException extends RuntimeException implements ContextAwareException {
+public class ReservedCommandException extends Exception implements ContextAwareException {
     private Long chatId;
     private final String command;
     private final Set<UserRole> userRoles;

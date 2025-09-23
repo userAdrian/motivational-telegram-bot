@@ -2,10 +2,10 @@ package it.vrad.motivational.telegram.bot.core.processor.update.actions;
 
 import it.vrad.motivational.telegram.bot.core.processor.update.actions.function.CallbackActionFunction;
 import it.vrad.motivational.telegram.bot.core.model.constants.PageConstants;
-import it.vrad.motivational.telegram.bot.core.service.callback.AdminPageCallbackService;
-import it.vrad.motivational.telegram.bot.core.service.callback.InfoPageCallbackService;
-import it.vrad.motivational.telegram.bot.core.service.callback.InitialPageCallbackService;
-import it.vrad.motivational.telegram.bot.core.service.callback.StatisticsPageCallbackService;
+import it.vrad.motivational.telegram.bot.core.facade.callback.AdminPageCallbackFacadeService;
+import it.vrad.motivational.telegram.bot.core.facade.callback.InfoPageCallbackFacadeService;
+import it.vrad.motivational.telegram.bot.core.facade.callback.InitialPageCallbackFacadeService;
+import it.vrad.motivational.telegram.bot.core.facade.callback.StatisticsPageCallbackFacadeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +20,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Component
 public class CallbackActionMapProvider {
-    private final InitialPageCallbackService initialPageCallbackService;
-    private final InfoPageCallbackService infoPageCallbackService;
-    private final StatisticsPageCallbackService statisticsPageCallbackService;
-    private final AdminPageCallbackService adminPageCallbackService;
+    private final InitialPageCallbackFacadeService initialPageCallbackFacadeService;
+    private final InfoPageCallbackFacadeService infoPageCallbackFacadeService;
+    private final StatisticsPageCallbackFacadeService statisticsPageCallbackFacadeService;
+    private final AdminPageCallbackFacadeService adminPageCallbackFacadeService;
 
     /**
      * Builds the callback action map, associating page references with lists of callback action functions.
@@ -45,7 +45,7 @@ public class CallbackActionMapProvider {
      * Builds the action map for the Initial Page.
      */
     private Map<String, List<CallbackActionFunction>> buildInitialPageActionMap() {
-        List<CallbackActionFunction> stepList = List.of(initialPageCallbackService::processCallbackQuery);
+        List<CallbackActionFunction> stepList = List.of(initialPageCallbackFacadeService::processCallbackQuery);
 
         return Map.of(PageConstants.InitialPage.PAGE_REFERENCE, stepList);
     }
@@ -54,7 +54,7 @@ public class CallbackActionMapProvider {
      * Builds the action map for the Info Page.
      */
     private Map<String, List<CallbackActionFunction>> buildInfoPageActionMap() {
-        List<CallbackActionFunction> stepList = List.of(infoPageCallbackService::processCallbackQuery);
+        List<CallbackActionFunction> stepList = List.of(infoPageCallbackFacadeService::processCallbackQuery);
 
         return Map.of(PageConstants.InfoPage.PAGE_REFERENCE, stepList);
     }
@@ -63,7 +63,7 @@ public class CallbackActionMapProvider {
      * Builds the action map for the Statistics Page.
      */
     private Map<String, List<CallbackActionFunction>> buildStatisticsPageActionMap() {
-        List<CallbackActionFunction> stepList = List.of(statisticsPageCallbackService::processCallbackQuery);
+        List<CallbackActionFunction> stepList = List.of(statisticsPageCallbackFacadeService::processCallbackQuery);
 
         return Map.of(PageConstants.StatisticsPage.PAGE_REFERENCE, stepList);
     }
@@ -72,10 +72,10 @@ public class CallbackActionMapProvider {
      * Builds the action map for the Admin Page, including the load phrases file button.
      */
     private Map<String, List<CallbackActionFunction>> buildAdminPageActionMap() {
-        List<CallbackActionFunction> stepListPage = List.of(adminPageCallbackService::processCallbackQuery);
+        List<CallbackActionFunction> stepListPage = List.of(adminPageCallbackFacadeService::processCallbackQuery);
 
         List<CallbackActionFunction> stepListLoadPhrasesFileButton =
-                List.of(adminPageCallbackService::processLoadPhrasesFileButton);
+                List.of(adminPageCallbackFacadeService::processLoadPhrasesFileButton);
 
         return Map.of(
                 PageConstants.AdminPage.PAGE_REFERENCE, stepListPage,

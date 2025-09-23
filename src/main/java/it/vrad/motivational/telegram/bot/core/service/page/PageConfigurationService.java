@@ -1,6 +1,6 @@
 package it.vrad.motivational.telegram.bot.core.service.page;
 
-import it.vrad.motivational.telegram.bot.core.model.enums.pages.PageEnum;
+import it.vrad.motivational.telegram.bot.core.model.enums.pages.PageButton;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.InlineKeyboardButton;
 
@@ -19,5 +19,5 @@ public interface PageConfigurationService {
      * @param <T> the type of PageEnum
      * @return a matrix of InlineKeyboardButton objects for the page
      */
-    <T extends PageEnum> InlineKeyboardButton[][] getPageButtons(Locale locale, T[] values, UserDto user);
+    <T extends PageButton> InlineKeyboardButton[][] getPageButtons(Locale locale, T[] values, UserDto user);
 }

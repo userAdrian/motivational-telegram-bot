@@ -53,7 +53,7 @@ public class MessageProcessor implements UpdateProcessor {
 
         try {
             // Get the appropriate action function for the message and execute it
-            getMessageActionFunction(message.getText(), chatId).apply(ObjectsFactory.buildMessageParameterDto(message));
+            getMessageActionFunction(message.getText(), chatId).apply(ObjectsFactory.buildIncomingMessageContext(message));
         } catch (Exception ex) {
             // Handle exceptions in a context-aware manner
             ExceptionProcessorUtility.handleUpdateProcessorException(ex, chatId);
@@ -78,14 +78,15 @@ public class MessageProcessor implements UpdateProcessor {
      * @return the selected {@link MessageActionFunction}
      * @throws UnrecognizedCommandException if the command is not recognized
      */
-    private MessageActionFunction getMessageActionFunction(String text, Long chatId) {
+    private MessageActionFunction getMessageActionFunction(String text, Long chatId)
+            throws UnrecognizedCommandException {
         StepDetail stepDetail = cacheService.getStepDetail(chatId);
 
         // If it's a command, get the first action for the command
         if (MessageUtility.isACommand(text)) {
             List<MessageActionFunction> stepList = messageActionMap.get(text);
             if (CollectionUtils.isEmpty(stepList)) {
-                throw new UnrecognizedCommandException(chatId, text);
+                throw new UnrecognizedCommandException(text);
             }
             // If a process is already started, remove the step detail
             if (stepDetail.isThereAProcessStarted()) {

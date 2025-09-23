@@ -1,4 +1,4 @@
-package it.vrad.motivational.telegram.bot.infrastructure.util;
+package it.vrad.motivational.telegram.bot.shared.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

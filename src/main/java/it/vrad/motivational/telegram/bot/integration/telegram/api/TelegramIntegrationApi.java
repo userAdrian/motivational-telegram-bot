@@ -8,6 +8,7 @@ import it.vrad.motivational.telegram.bot.integration.telegram.model.request.Send
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.SendPhotoRequest;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.File;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
+import it.vrad.motivational.telegram.bot.integration.telegram.util.MessageUtility;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -42,7 +43,10 @@ public interface TelegramIntegrationApi {
      * @param phraseDto the phrase DTO
      * @return the sent {@link Message}
      */
-    Message sendPhrase(Long chatId, PhraseDto phraseDto);
+    default Message sendPhrase(Long chatId, PhraseDto phraseDto) {
+        // Format and send a phrase as a message
+        return sendSimpleMessage(chatId, MessageUtility.formatPhrase(phraseDto));
+    }
 
     /**
      * Sends a photo using the Telegram Bot API.
@@ -87,9 +91,15 @@ public interface TelegramIntegrationApi {
 
     /**
      * Downloads a file from Telegram using a {@link GetFileRequest}.
+     * <p>
+     * See also {@link TelegramIntegrationApi#getFile(GetFileRequest)}, {@link TelegramIntegrationApi#downloadFile(String, Long)}
      *
      * @param request the get file request
      * @return the file as a byte array
      */
-    byte[] downloadFile(@NotNull @Valid GetFileRequest request);
+    default byte[] downloadFile(@NotNull @Valid GetFileRequest request) {
+        // Retrieve file info and then download the file
+        File file = getFile(request);
+        return downloadFile(file.getFilePath(), request.getChatId());
+    }
 }

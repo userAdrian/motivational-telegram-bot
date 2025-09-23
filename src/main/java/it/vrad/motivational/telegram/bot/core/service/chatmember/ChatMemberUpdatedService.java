@@ -1,5 +1,6 @@
 package it.vrad.motivational.telegram.bot.core.service.chatmember;
 
+import it.vrad.motivational.telegram.bot.core.exception.NoSuchUserException;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.ChatMemberUpdated;
 
 /**
@@ -11,5 +12,5 @@ public interface ChatMemberUpdatedService {
      *
      * @param chatMemberUpdated the chat member update event from Telegram
      */
-    void updateUserStatus(ChatMemberUpdated chatMemberUpdated);
+    void updateUserStatus(ChatMemberUpdated chatMemberUpdated) throws NoSuchUserException;
 }

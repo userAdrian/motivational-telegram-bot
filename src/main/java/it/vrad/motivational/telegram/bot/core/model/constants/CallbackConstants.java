@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CallbackConstants {
-    public static final String PAGE_REFERENCE_PREFIX = "page:";
-    public static final String BUTTON_REFERENCE_PREFIX = "button:";
-    public static final String DATA_REFERENCE_PREFIX = "data:";
+    public static final String PAGE_REFERENCE_PREFIX = "page_";
+    public static final String BUTTON_REFERENCE_PREFIX = "button_";
+    public static final String DATA_REFERENCE_PREFIX = "data_";
 
 }

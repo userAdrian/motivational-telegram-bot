@@ -1,5 +1,5 @@
 singleServerConfig:
-  address: "redis://redis-18995.c135.eu-central-1-1.ec2.redns.redis-cloud.com:18995"
+  address: "redis://redis-12898.c339.eu-west-3-1.ec2.redns.redis-cloud.com:12898"
   username: ${REDIS_USERNAME}
   password: ${REDIS_PASSWORD}
   connectionMinimumIdleSize: 4

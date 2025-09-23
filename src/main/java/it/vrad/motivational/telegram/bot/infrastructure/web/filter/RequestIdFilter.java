@@ -1,7 +1,7 @@
 package it.vrad.motivational.telegram.bot.infrastructure.web.filter;
 
 import it.vrad.motivational.telegram.bot.infrastructure.web.constants.FilterConstants;
-import it.vrad.motivational.telegram.bot.infrastructure.web.constants.MdcConstants;
+import it.vrad.motivational.telegram.bot.infrastructure.logging.constants.MdcConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

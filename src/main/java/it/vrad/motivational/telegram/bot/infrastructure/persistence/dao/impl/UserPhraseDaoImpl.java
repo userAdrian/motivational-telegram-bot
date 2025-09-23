@@ -1,13 +1,12 @@
 package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.impl;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserPhraseDto;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.UserPhrase;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.AbstractDao;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.UserPhraseDao;
+import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.UserPhrase;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.ids.UserPhraseId;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.mapper.UserPhraseToUserPhraseDtoMapper;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.repository.UserPhraseRepository;
-
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -37,9 +36,9 @@ public class UserPhraseDaoImpl extends AbstractDao<UserPhrase, UserPhraseDto> im
      * @return {@inheritDoc}
      */
     @Override
-    public Optional<UserPhraseDto> findUserPhraseById(Long userId, Long phraseId) {
+    public Optional<UserPhraseDto> findByUserPhraseId(Long userId, Long phraseId) {
         // Find user phrase by composite ID and map to DTO
-        return findById(userId, phraseId)
+        return this.findById(userId, phraseId)
                 .map(super::toDto)
                 .or(Optional::empty);
     }
@@ -60,11 +59,11 @@ public class UserPhraseDaoImpl extends AbstractDao<UserPhrase, UserPhraseDto> im
      * @return {@inheritDoc}
      */
     @Override
-    public List<UserPhraseDto> findAllValidUserPhrase(Long userId) {
+    public List<UserPhraseDto> findAllByUserId(Long userId) {
         Objects.requireNonNull(userId);
 
         // Retrieve all valid user phrases for the user and map to DTOs
-        return toDto(userPhraseRepository.findAllValidUserPhrases(userId));
+        return toDto(userPhraseRepository.findAllByUserId(userId));
     }
 
     /**
@@ -74,7 +73,7 @@ public class UserPhraseDaoImpl extends AbstractDao<UserPhrase, UserPhraseDto> im
      * @return {@inheritDoc}
      */
     @Override
-    public UserPhraseDto saveUserPhrase(UserPhraseDto userPhraseDto) {
+    public UserPhraseDto save(UserPhraseDto userPhraseDto) {
         Objects.requireNonNull(userPhraseDto);
 
         // Save the user phrase entity and return as DTO
@@ -84,20 +83,29 @@ public class UserPhraseDaoImpl extends AbstractDao<UserPhrase, UserPhraseDto> im
     /**
      * {@inheritDoc}
      *
-     * @param userPhraseDto {@inheritDoc}
+     * @param userId   {@inheritDoc}
+     * @param phraseId {@inheritDoc}
      * @return {@inheritDoc}
      */
     @Override
-    public UserPhraseDto markAsReadAndIncrement(UserPhraseDto userPhraseDto) {
-        Objects.requireNonNull(userPhraseDto);
+    public Optional<UserPhraseDto> markAsReadAndIncrement(Long userId, Long phraseId) {
+        Optional<UserPhrase> userPhraseOpt = findById(userId, phraseId);
 
+        if (userPhraseOpt.isEmpty()) return Optional.empty();
+
+        return userPhraseOpt
+                .map(UserPhraseDaoImpl::markAsReadAndIncrement)
+                .map(userPhraseRepository::save)
+                .map(this::toDto);
+    }
+
+    private static UserPhrase markAsReadAndIncrement(UserPhrase userPhrase) {
         // Mark as read and increment the read count
-        userPhraseDto.setRead(Boolean.TRUE);
-        int currentCount = userPhraseDto.getReadCount();
-        userPhraseDto.setReadCount(currentCount + 1);
+        userPhrase.setRead(Boolean.TRUE);
+        int currentCount = userPhrase.getReadCount();
+        userPhrase.setReadCount(currentCount + 1);
 
-        // Save the updated entity and return as DTO
-        return toDto(userPhraseRepository.save(toEntity(userPhraseDto)));
+        return userPhrase;
     }
 
     /**

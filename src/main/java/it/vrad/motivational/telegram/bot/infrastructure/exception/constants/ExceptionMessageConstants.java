@@ -15,7 +15,7 @@ public class ExceptionMessageConstants {
     public static final String LOG_GENERIC_ERROR_MESSAGE = "Error occurred";
     public static final String LOG_GENERIC_ERROR_MESSAGE_TEMPLATE = "Error occurred with trackingErrorCode: %s";
     public static final String FE_GENERIC_ERROR_MESSAGE = "Please try again or contact assistance.\nError code: %s";
-    public static final String GENERIC_ERROR_CODE = "GENERIC_CODE";
+    public static final String GENERIC_ERROR_CODE = "500";
 
     // --- API Exception Messages ---
     public static final String LOG_API_EXCEPTION_MESSAGE_TEMPLATE =

@@ -77,7 +77,7 @@ public class CallbackQueryProcessor implements UpdateProcessor {
      */
     private void executeAction(List<CallbackActionFunction> actions, int stepIndex, CallbackQuery callbackQuery) {
         // Build the parameter DTO and apply the action function
-        actions.get(stepIndex).apply(ObjectsFactory.buildCallbackParameterDto(callbackQuery));
+        actions.get(stepIndex).apply(ObjectsFactory.buildIncomingCallbackContext(callbackQuery));
     }
 
     /**

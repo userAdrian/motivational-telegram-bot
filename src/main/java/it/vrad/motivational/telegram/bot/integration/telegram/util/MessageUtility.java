@@ -11,9 +11,11 @@ import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Pho
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,16 +56,17 @@ public class MessageUtility {
     }
 
     /**
-     * Gets the file ID of the first photo in a message.
+     * Gets the file ID of the last photo in a message. It is the one with the biggest resolution
      *
      * @param message the Telegram message
      * @return photo file ID
      * @throws NoSuchElementException if photo or file ID is not present
      */
-    public static String getPhotoId(Message message) {
+    public static String getLastPhotoId(Message message) {
         return Optional.ofNullable(message)
                 .map(Message::getPhoto)
-                .flatMap(photoSizes -> photoSizes.stream().findFirst())
+                .filter(CollectionUtils::isNotEmpty)
+                .map(List::getLast)
                 .map(PhotoSize::getFileId)
                 .orElseThrow(() -> ExceptionUtility.createNoSuchElementException("Photo ID", MESSAGE_TYPE_NAME));
     }

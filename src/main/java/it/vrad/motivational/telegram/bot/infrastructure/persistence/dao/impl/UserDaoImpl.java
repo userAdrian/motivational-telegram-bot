@@ -40,7 +40,7 @@ public class UserDaoImpl extends AbstractDao<User, UserDto> implements UserDao {
      * @throws NullPointerException {@inheritDoc}
      */
     @Override
-    public Optional<UserDto> findUserByTelegramId(Long telegramId) {
+    public Optional<UserDto> findByTelegramId(Long telegramId) {
         Objects.requireNonNull(telegramId);
 
         // Find user by Telegram ID and map to DTO
@@ -57,16 +57,14 @@ public class UserDaoImpl extends AbstractDao<User, UserDto> implements UserDao {
      * @throws NullPointerException {@inheritDoc}
      */
     @Override
-    public UserDto saveUser(UserDto userDto) {
+    public UserDto save(UserDto userDto) {
         Objects.requireNonNull(userDto);
 
         User entity = toEntity(userDto);
 
         // Set the user reference in chat if present
-        Chat chat = entity.getChat();
-        if (chat != null) {
-            chat.setUser(entity);
-        }
+        Chat chat = Objects.requireNonNull(entity.getChat(), "Chat is missing on User entity");
+        chat.setUser(entity);
 
         // Save entity and return as DTO
         return toDto(userRepository.save(entity));
@@ -92,7 +90,7 @@ public class UserDaoImpl extends AbstractDao<User, UserDto> implements UserDao {
      * @throws NoSuchUserException {@inheritDoc}
      */
     @Override
-    public UserDto updateUser(Long telegramId, UserDto userDto) {
+    public UserDto update(Long telegramId, UserDto userDto) throws NoSuchUserException {
         Objects.requireNonNull(telegramId);
         Objects.requireNonNull(userDto);
 

@@ -17,7 +17,7 @@ public interface UserDao {
      * @param telegramId the Telegram ID of the user
      * @return an {@link Optional} containing the found {@link UserDto}, or empty if not found
      */
-    Optional<UserDto> findUserByTelegramId(Long telegramId);
+    Optional<UserDto> findByTelegramId(Long telegramId);
 
     /**
      * Saves the given {@link UserDto} to the persistence storage.
@@ -25,7 +25,7 @@ public interface UserDao {
      * @param userDto the DTO to save
      * @return the saved {@link UserDto}
      */
-    UserDto saveUser(UserDto userDto);
+    UserDto save(UserDto userDto);
 
     /**
      * Retrieves all valid users.
@@ -42,5 +42,5 @@ public interface UserDao {
      * @return the updated {@link UserDto}
      * @throws NoSuchUserException if no user with the given Telegram ID exists
      */
-    UserDto updateUser(Long telegramId, UserDto userDto);
+    UserDto update(Long telegramId, UserDto userDto) throws NoSuchUserException;
 }

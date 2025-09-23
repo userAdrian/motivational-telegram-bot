@@ -1,16 +1,17 @@
 package it.vrad.motivational.telegram.bot.core.exception;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class UnrecognizedCommandException extends RuntimeException {
+@Setter
+public class UnrecognizedCommandException extends Exception implements ContextAwareException {
     private Long chatId;
     private String command;
 
-    public UnrecognizedCommandException(Long chatId, String command){
+    public UnrecognizedCommandException(String command){
         super();
 
-        this.chatId = chatId;
         this.command = command;
     }
 

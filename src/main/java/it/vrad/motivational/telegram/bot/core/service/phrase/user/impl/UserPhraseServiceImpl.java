@@ -61,16 +61,15 @@ public class UserPhraseServiceImpl implements UserPhraseService {
     @Override
     @CacheEvict(value = CacheConstants.STATISTICS_PAGE_CACHE_NAME, key = CacheConstants.STATISTICS_PAGE_CACHE_KEY)
     public UserPhraseDto updateUserPhraseReadStatus(Long userId, Long phraseId) {
-        // Try to find the user-phrase relation
-        Optional<UserPhraseDto> userPhraseOpt = userPhraseDao.findUserPhraseById(userId, phraseId);
+        // Try to mark as read and increment read count
+        Optional<UserPhraseDto> userPhraseOpt = userPhraseDao.markAsReadAndIncrement(userId, phraseId);
 
-        if (userPhraseOpt.isPresent()) {
-            // If found, mark as read and increment counter
-            return userPhraseDao.markAsReadAndIncrement(userPhraseOpt.get());
-        }
-
-        // If not found, create a new user-phrase relation
-        return userPhraseDao.saveUserPhrase(PersistenceDtoFactory.buildInitialUserPhraseDto(userId, phraseId));
+        // Return the updated userPhrase
+        return userPhraseOpt
+                .orElseGet(() ->
+                        // If not found, create a new user-phrase relation
+                        userPhraseDao.save(PersistenceDtoFactory.buildInitialUserPhraseDto(userId, phraseId))
+                );
     }
 
     /**
@@ -87,7 +86,7 @@ public class UserPhraseServiceImpl implements UserPhraseService {
         Objects.requireNonNull(userId);
 
         // Retrieve all valid user-phrase relations for the user
-        List<UserPhraseDto> userPhraseList = userPhraseDao.findAllValidUserPhrase(userId);
+        List<UserPhraseDto> userPhraseList = userPhraseDao.findAllByUserId(userId);
 
         // Group user phrases by author
         Map<AuthorDto, List<UserPhraseDto>> authorToUserPhrasesMap = StatisticsPageUtility.groupUserPhrasesByAuthor(userPhraseList);

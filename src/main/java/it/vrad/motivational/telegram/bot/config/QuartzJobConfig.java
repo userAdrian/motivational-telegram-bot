@@ -2,7 +2,7 @@ package it.vrad.motivational.telegram.bot.config;
 
 import it.vrad.motivational.telegram.bot.config.properties.PhraseProperties;
 import it.vrad.motivational.telegram.bot.infrastructure.job.PhraseNotificationJob;
-import it.vrad.motivational.telegram.bot.infrastructure.util.DateUtility;
+import it.vrad.motivational.telegram.bot.shared.util.DateUtility;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;

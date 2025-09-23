@@ -12,15 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
-@Getter
-@Setter
+@Data
 public class User {
 
     @Id

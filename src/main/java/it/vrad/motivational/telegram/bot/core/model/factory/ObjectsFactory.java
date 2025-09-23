@@ -19,7 +19,7 @@ public class ObjectsFactory {
      * @param message the Telegram message
      * @return the constructed IncomingMessageContext
      */
-    public static IncomingMessageContext buildMessageParameterDto(Message message){
+    public static IncomingMessageContext buildIncomingMessageContext(Message message){
         return IncomingMessageContext.builder()
                 .messageSent(message)
                 .build();
@@ -31,7 +31,7 @@ public class ObjectsFactory {
      * @param callbackQuery the Telegram callback query
      * @return the constructed IncomingCallbackContext
      */
-    public static IncomingCallbackContext buildCallbackParameterDto(CallbackQuery callbackQuery){
+    public static IncomingCallbackContext buildIncomingCallbackContext(CallbackQuery callbackQuery){
         return IncomingCallbackContext.builder()
                 .callbackQuery(callbackQuery)
                 .build();

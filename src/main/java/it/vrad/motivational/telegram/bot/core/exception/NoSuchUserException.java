@@ -6,11 +6,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NoSuchUserException extends RuntimeException implements ContextAwareException {
+public class NoSuchUserException extends Exception implements ContextAwareException {
     private Long chatId;
     private Long telegramId;
 
     public NoSuchUserException(Long telegramId) {
         super(ExceptionLogMessageHelper.getUserNotFoundMessage(telegramId));
+
+        this.telegramId = telegramId;
     }
 }

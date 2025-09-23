@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 public interface CooldownToCooldownDtoMapper extends EntityToDtoMapper<Cooldown, CooldownDto> {
 
     @Mapping(source = "user", target = "userDto")
+    @Mapping(source = "user.chat", target = "userDto.chatDto")
     @Override
     CooldownDto toDto(Cooldown cooldown);
 

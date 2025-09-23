@@ -1,7 +1,8 @@
 package it.vrad.motivational.telegram.bot.core.service.message;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.MessageDto;
-import it.vrad.motivational.telegram.bot.core.model.context.IncomingMessageContext;
+import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
+import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
 
 /**
  * Service interface for admin message operations.
@@ -11,26 +12,32 @@ import it.vrad.motivational.telegram.bot.core.model.context.IncomingMessageConte
 public interface AdminMessageService {
 
     /**
-     * Forwards the user to the admin page.
+     * Generates the admin page message DTO for the given user.
      *
-     * @param incomingMessageContext the context of the incoming message
-     * @return {@code null}
+     * @param user the user for whom to generate the admin page message
+     * @return the generated {@link MessageDto} for the admin page
      */
-    MessageDto forwardToAdminPage(IncomingMessageContext incomingMessageContext);
+    MessageDto generateAdminPageMessageDto(UserDto user);
 
     /**
-     * Processes the command to load file phrases, sends instructions, and updates step detail.
+     * Persists the Telegram file information after sending a message.
      *
-     * @param incomingMessageContext the context of the incoming message
-     * @return {@code null}
+     * @param sentMessage        the sent Telegram {@link Message}
+     * @param telegramFileIdSent the Telegram file ID associated with the sent message
      */
-    MessageDto processLoadFilePhrasesCommand(IncomingMessageContext incomingMessageContext);
+    void persistTelegramFile(Message sentMessage, String telegramFileIdSent);
 
     /**
-     * Processes the first step of loading file phrases: receives the file, parses phrases, saves them, and sends confirmation.
+     * Sends instructions to the user for loading file phrases as part of the admin command process.
      *
-     * @param incomingMessageContext the context of the incoming message
-     * @return {@code null}
+     * @param chatId the chat ID to which the instructions should be sent
      */
-    MessageDto processLoadFilePhrasesCommandStepOne(IncomingMessageContext incomingMessageContext);
+    void sendLoadFilePhrasesCommandMessage(Long chatId);
+
+    /**
+     * Sends a notification to the user indicating successful upload of a file containing phrases.
+     *
+     * @param chatId the chat ID to which the notification should be sent
+     */
+    void sendFileUploadSuccessNotification(Long chatId);
 }

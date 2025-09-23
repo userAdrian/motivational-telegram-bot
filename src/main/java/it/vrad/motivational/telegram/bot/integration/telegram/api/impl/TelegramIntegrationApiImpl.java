@@ -2,9 +2,7 @@ package it.vrad.motivational.telegram.bot.integration.telegram.api.impl;
 
 import it.vrad.motivational.telegram.bot.config.properties.TelegramProperties;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.TelegramIntegrationApi;
-import it.vrad.motivational.telegram.bot.integration.telegram.util.TelegramApiRequestUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.client.TelegramRestTemplate;
-import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseDto;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.CallbackQueryAnswerRequest;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.EditMessageMediaRequest;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.GetFileRequest;
@@ -12,7 +10,7 @@ import it.vrad.motivational.telegram.bot.integration.telegram.model.request.Send
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.SendPhotoRequest;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.File;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
-import it.vrad.motivational.telegram.bot.integration.telegram.util.MessageUtility;
+import it.vrad.motivational.telegram.bot.integration.telegram.util.TelegramApiRequestUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -83,19 +81,6 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
                         .text(text)
                         .build()
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param chatId    {@inheritDoc}
-     * @param phraseDto {@inheritDoc}
-     * @return {@inheritDoc}
-     */
-    @Override
-    public Message sendPhrase(Long chatId, PhraseDto phraseDto) {
-        // Format and send a phrase as a message
-        return sendSimpleMessage(chatId, MessageUtility.formatPhrase(phraseDto));
     }
 
     /**
@@ -185,19 +170,6 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
                 byte[].class,
                 chatId
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param request {@inheritDoc}
-     * @return {@inheritDoc}
-     */
-    @Override
-    public byte[] downloadFile(GetFileRequest request) {
-        // Retrieve file info and then download the file
-        File file = getFile(request);
-        return downloadFile(file.getFilePath(), request.getChatId());
     }
 
 }

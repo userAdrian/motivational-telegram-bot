@@ -16,7 +16,7 @@ import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserPhraseDt
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Chat;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.ids.UserPhraseId;
-import it.vrad.motivational.telegram.bot.infrastructure.util.CommonUtility;
+import it.vrad.motivational.telegram.bot.shared.util.CommonUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.util.MessageUtility;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -40,7 +40,7 @@ public class PersistenceDtoFactory {
      * @return a TelegramFileDto instance
      */
     public static TelegramFileDto buildTelegramFileDto(String fileName, Message message) {
-        return new TelegramFileDto(fileName, MessageUtility.getPhotoId(message));
+        return new TelegramFileDto(fileName, MessageUtility.getLastPhotoId(message));
     }
 
     /**

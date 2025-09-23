@@ -6,7 +6,7 @@ import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.AuthorDa
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.PhraseDao;
 import it.vrad.motivational.telegram.bot.core.service.phrase.PhraseService;
 import it.vrad.motivational.telegram.bot.core.service.phrase.user.UserPhraseService;
-import it.vrad.motivational.telegram.bot.infrastructure.util.CommonUtility;
+import it.vrad.motivational.telegram.bot.shared.util.CommonUtility;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

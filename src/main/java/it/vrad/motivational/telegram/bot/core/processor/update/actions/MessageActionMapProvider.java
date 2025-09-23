@@ -1,10 +1,10 @@
 package it.vrad.motivational.telegram.bot.core.processor.update.actions;
 
+import it.vrad.motivational.telegram.bot.core.facade.message.admin.AdminCommandFacadeService;
 import it.vrad.motivational.telegram.bot.core.processor.update.actions.function.MessageActionFunction;
 import it.vrad.motivational.telegram.bot.core.model.constants.CommandConstants;
-import it.vrad.motivational.telegram.bot.core.service.message.AdminMessageService;
-import it.vrad.motivational.telegram.bot.core.service.message.InitialMessageService;
-import it.vrad.motivational.telegram.bot.core.service.message.PhraseMessageService;
+import it.vrad.motivational.telegram.bot.core.facade.message.InitialPageMessageFacadeService;
+import it.vrad.motivational.telegram.bot.core.facade.message.PhraseMessageFacadeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +20,9 @@ import java.util.Map;
 @Component
 public class MessageActionMapProvider {
 
-    private final InitialMessageService initialMessageService;
-    private final PhraseMessageService phraseMessageService;
-    private final AdminMessageService adminMessageService;
+    private final InitialPageMessageFacadeService initialPageMessageFacadeService;
+    private final PhraseMessageFacadeService phraseMessageFacadeService;
+    private final AdminCommandFacadeService adminCommandFacadeService;
 
     /**
      * Builds the message action map, associating command texts with lists of message action functions.
@@ -44,7 +44,7 @@ public class MessageActionMapProvider {
      * Builds the action map for welcome/initial messages.
      */
     private Map<String, List<MessageActionFunction>> getWelcomeMessagesActionMap() {
-        List<MessageActionFunction> stepList = List.of(initialMessageService::processInitialMessage);
+        List<MessageActionFunction> stepList = List.of(initialPageMessageFacadeService::processInitialMessage);
 
         return Map.of(CommandConstants.Initial.TEXT, stepList);
     }
@@ -53,7 +53,7 @@ public class MessageActionMapProvider {
      * Builds the action map for the random phrase command.
      */
     private Map<String, List<MessageActionFunction>> getRandomPhraseMessageActionMap() {
-        List<MessageActionFunction> stepList = List.of(phraseMessageService::processRandomPhraseCommand);
+        List<MessageActionFunction> stepList = List.of(phraseMessageFacadeService::processRandomPhraseCommand);
 
         return Map.of(CommandConstants.RandomPhrase.TEXT, stepList);
     }
@@ -63,8 +63,8 @@ public class MessageActionMapProvider {
      */
     private Map<String, List<MessageActionFunction>> getLoadPhrasesMessageActionMap() {
         List<MessageActionFunction> stepList = List.of(
-                adminMessageService::processLoadFilePhrasesCommand,
-                adminMessageService::processLoadFilePhrasesCommandStepOne
+                adminCommandFacadeService::processLoadFilePhrasesCommand,
+                adminCommandFacadeService::processLoadFilePhrasesCommandStepOne
         );
 
         return Map.of(CommandConstants.LoadFilePhrases.TEXT, stepList);

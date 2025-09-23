@@ -1,5 +1,7 @@
 package it.vrad.motivational.telegram.bot.infrastructure.exception.util;
 
+import it.vrad.motivational.telegram.bot.core.exception.MotivationalTelegramBotException;
+import it.vrad.motivational.telegram.bot.core.exception.UncheckedWrapperException;
 import it.vrad.motivational.telegram.bot.integration.telegram.TelegramConstants;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -92,6 +94,36 @@ public class ExceptionUtility {
      */
     public static boolean isCallbackQueryProcessed(String message) {
         return message != null && message.contains(TelegramConstants.MESSAGE_NOT_MODIFIED_ERROR);
+    }
+
+    /**
+     * Unwraps an exception that may be wrapped in an {@link UncheckedWrapperException}.
+     * <p>
+     * If the given exception is an {@code UncheckedWrapperException}, recursively unwraps its cause until
+     * an {@code Exception} is found or a non-{@code Exception} cause is encountered. If the cause is not an
+     * {@code Exception}, wraps it in a {@link MotivationalTelegramBotException}. If the input is not an
+     * {@code UncheckedWrapperException}, returns the input as-is.
+     *
+     * @param ex the exception to unwrap
+     * @return the unwrapped exception, or a wrapped {@link MotivationalTelegramBotException} if the cause is not an Exception
+     */
+    public static Exception unwrapException(Exception ex) {
+        Exception current = ex;
+        while (current instanceof UncheckedWrapperException uw) {
+            Throwable cause = uw.getCause();
+            if (cause == null) {
+                return new MotivationalTelegramBotException("Unknown cause (null) in UncheckedWrapperException", uw);
+            }
+            if (cause instanceof Exception exception) {
+                current = exception;
+            } else {
+                return new MotivationalTelegramBotException(
+                        "Non-Exception cause in UncheckedWrapperException: " + cause.getClass().getName(),
+                        cause
+                );
+            }
+        }
+        return current;
     }
 
 }

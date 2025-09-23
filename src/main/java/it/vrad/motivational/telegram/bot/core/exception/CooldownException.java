@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @ToString
-public class CooldownException extends RuntimeException implements ContextAwareException {
+public class CooldownException extends Exception implements ContextAwareException {
     private Long chatId;
     private final CooldownType type;
     private final OffsetDateTime endingTime;

@@ -1,12 +1,14 @@
 package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.impl;
 
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.CooldownDto;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.Cooldown;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
+import it.vrad.motivational.telegram.bot.infrastructure.exception.util.ExceptionLogMessageHelper;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.AbstractDao;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.CooldownDao;
+import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.Cooldown;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.mapper.CooldownToCooldownDtoMapper;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.repository.CooldownRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -62,9 +64,10 @@ public class CooldownDaoImpl extends AbstractDao<Cooldown, CooldownDto> implemen
      * @param id                 {@inheritDoc}
      * @param partialCooldownDto {@inheritDoc}
      * @return {@inheritDoc}
+     * @throws EntityNotFoundException {@inheritDoc}
      */
     @Override
-    public Optional<CooldownDto> updateCooldown(Long id, CooldownDto partialCooldownDto) {
+    public CooldownDto updateCooldown(Long id, CooldownDto partialCooldownDto) {
         Objects.requireNonNull(id);
         Objects.requireNonNull(partialCooldownDto);
 
@@ -72,6 +75,7 @@ public class CooldownDaoImpl extends AbstractDao<Cooldown, CooldownDto> implemen
         return cooldownRepository.findById(id)
                 .map(entity -> partialUpdate(entity, partialCooldownDto))
                 .map(cooldownRepository::save)
-                .map(super::toDto);
+                .map(super::toDto)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionLogMessageHelper.getCooldownNotFound(id)));
     }
 }

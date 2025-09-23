@@ -1,10 +1,9 @@
-package it.vrad.motivational.telegram.bot.infrastructure.util;
+package it.vrad.motivational.telegram.bot.shared.util;
 
 import it.vrad.motivational.telegram.bot.infrastructure.exception.util.ExceptionUtility;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 

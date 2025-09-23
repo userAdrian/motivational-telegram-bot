@@ -2,7 +2,7 @@ package it.vrad.motivational.telegram.bot.integration.telegram.util;
 
 
 import it.vrad.motivational.telegram.bot.core.model.dto.MessageDto;
-import it.vrad.motivational.telegram.bot.infrastructure.util.FilesUtility;
+import it.vrad.motivational.telegram.bot.shared.util.FileUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.CallbackQueryAnswerRequest;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.EditMessageMediaRequest;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.request.GetFileRequest;
@@ -114,7 +114,7 @@ public class TelegramApiRequestUtility {
      */
     public static InputMediaPhoto buildInputMediaPhoto(MessageDto messageDto) {
         // Determine the media value (file ID, URL, or file)
-        String media = FilesUtility.getMediaValue(messageDto.getTelegramFileId(), messageDto.getPhoto(), null);
+        String media = FileUtility.getMediaValue(messageDto.getTelegramFileId(), messageDto.getPhoto(), null);
         return InputMediaPhoto.builder()
                 .type(messageDto.getMediaType())
                 .media(media)

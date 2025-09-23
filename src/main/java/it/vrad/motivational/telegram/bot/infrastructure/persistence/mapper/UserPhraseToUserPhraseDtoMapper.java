@@ -10,6 +10,7 @@ public interface UserPhraseToUserPhraseDtoMapper extends EntityToDtoMapper<UserP
 
     @Mapping(source = "user", target = "userDto")
     @Mapping(source = "phrase", target = "phraseDto")
+    @Mapping(source = "user.chat", target = "userDto.chatDto")
     @Override
     UserPhraseDto toDto(UserPhrase entity);
 

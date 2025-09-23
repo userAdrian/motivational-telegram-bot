@@ -1,6 +1,6 @@
 package it.vrad.motivational.telegram.bot.infrastructure.http.interceptor;
 
-import it.vrad.motivational.telegram.bot.infrastructure.web.constants.MdcConstants;
+import it.vrad.motivational.telegram.bot.infrastructure.logging.constants.MdcConstants;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserNotValidException extends RuntimeException implements ContextAwareException {
+public class UserNotValidException extends Exception implements ContextAwareException {
     private Long chatId;
     private final Long telegramUserId;
     private final UserRole userRole;

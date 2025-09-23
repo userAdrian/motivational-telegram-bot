@@ -1,8 +1,8 @@
-package it.vrad.motivational.telegram.bot.infrastructure.util;
+package it.vrad.motivational.telegram.bot.shared.util;
 
-import it.vrad.motivational.telegram.bot.integration.telegram.TelegramConstants;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseDto;
 import it.vrad.motivational.telegram.bot.core.model.factory.PersistenceDtoFactory;
+import it.vrad.motivational.telegram.bot.integration.telegram.TelegramConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  * Utility class for file operations and CSV parsing.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FilesUtility {
+public class FileUtility {
 
     /**
      * Gets a File object from a file name or classpath resource.
@@ -120,5 +121,37 @@ public class FilesUtility {
                 new InputStreamReader(new ByteArrayInputStream(bytes)),
                 csvFormat
         );
+    }
+
+    /**
+     * Validates that the actual file format matches one of the expected formats.
+     * <p>
+     * This method checks if the provided actual format string matches (case-insensitive)
+     * any of the expected format strings. If not, it throws an IllegalArgumentException.
+     *
+     * @param actual          the actual file format to validate (e.g., "csv", "txt")
+     * @param expectedFormats one or more expected file formats to check against
+     * @throws NullPointerException     if actual or expectedFormats is null
+     * @throws IllegalArgumentException if expectedFormats is empty or actual does not match any expected format
+     */
+    public static void validateFileFormat(String actual, String... expectedFormats) {
+        Objects.requireNonNull(actual, "actual format cannot be null");
+        Objects.requireNonNull(expectedFormats, "expected format cannot be null");
+
+        if (expectedFormats.length == 0)
+            throw new IllegalArgumentException("At least one expected format must be provided");
+
+        boolean matches = Arrays.stream(expectedFormats)
+                .anyMatch(actual::equalsIgnoreCase);
+
+        if (!matches) {
+            throw new IllegalArgumentException(
+                    String.format(
+                            "Unsupported file format: %s. Expected one of: %s",
+                            actual,
+                            String.join(",", expectedFormats)
+                    )
+            );
+        }
     }
 }

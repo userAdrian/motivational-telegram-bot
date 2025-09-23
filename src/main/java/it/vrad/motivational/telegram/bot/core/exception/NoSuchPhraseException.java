@@ -1,6 +1,6 @@
 package it.vrad.motivational.telegram.bot.core.exception;
 
-public class NoSuchPhraseException extends RuntimeException {
+public class NoSuchPhraseException extends Exception {
 
     public NoSuchPhraseException() {
         super();

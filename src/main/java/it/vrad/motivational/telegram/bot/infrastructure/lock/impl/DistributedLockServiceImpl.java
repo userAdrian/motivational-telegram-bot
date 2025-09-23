@@ -47,7 +47,7 @@ public class DistributedLockServiceImpl implements DistributedLockService {
             if (lock.tryLock(lockWaitTime, lockLeaseTime, TimeUnit.SECONDS)) {
                 log.info("Distributed lock acquired for key '{}'", key);
                 runTask(task, lock, key);
-            }else{
+            } else {
                 log.info("Distributed lock NOT acquired for key '{}'", key);
             }
         } catch (InterruptedException e) {

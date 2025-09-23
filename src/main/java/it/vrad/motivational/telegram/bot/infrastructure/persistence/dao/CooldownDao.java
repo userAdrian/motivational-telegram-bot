@@ -1,7 +1,8 @@
 package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao;
 
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.CooldownDto;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.Optional;
 
@@ -31,7 +32,8 @@ public interface CooldownDao {
      *
      * @param id                 the ID of the cooldown to update
      * @param partialCooldownDto a DTO containing only the fields to update
-     * @return the updated CooldownDto, or Optional.empty() if not found
+     * @return the updated CooldownDto
+     * @throws EntityNotFoundException when entity with {@code id} is not found
      */
-    Optional<CooldownDto> updateCooldown(Long id, CooldownDto partialCooldownDto);
+    CooldownDto updateCooldown(Long id, CooldownDto partialCooldownDto);
 }

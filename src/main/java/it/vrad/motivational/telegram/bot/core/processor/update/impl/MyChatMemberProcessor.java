@@ -1,9 +1,10 @@
 package it.vrad.motivational.telegram.bot.core.processor.update.impl;
 
-import it.vrad.motivational.telegram.bot.core.processor.update.UpdateProcessor;
 import it.vrad.motivational.telegram.bot.core.model.enums.UpdateProcessorType;
-import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Update;
+import it.vrad.motivational.telegram.bot.core.processor.update.UpdateProcessor;
+import it.vrad.motivational.telegram.bot.core.processor.util.ExceptionProcessorUtility;
 import it.vrad.motivational.telegram.bot.core.service.chatmember.ChatMemberUpdatedService;
+import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -30,8 +31,13 @@ public class MyChatMemberProcessor implements UpdateProcessor {
     @Override
     public void accept(Update update) {
         Objects.requireNonNull(update);
-        // Delegate to the chat member updated service
-        chatMemberUpdatedService.updateUserStatus(update.getMyChatMember());
+        try {
+            // Delegate to the chat member updated service
+            chatMemberUpdatedService.updateUserStatus(update.getMyChatMember());
+        } catch (Exception ex) {
+            // Set chatId to null to prevent sending error messages to the chat
+            ExceptionProcessorUtility.handleUpdateProcessorException(ex, null);
+        }
     }
 
     /**

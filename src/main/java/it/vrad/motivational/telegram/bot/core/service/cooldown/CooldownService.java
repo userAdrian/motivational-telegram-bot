@@ -1,9 +1,10 @@
 package it.vrad.motivational.telegram.bot.core.service.cooldown;
 
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
 import it.vrad.motivational.telegram.bot.core.exception.CooldownException;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.CooldownDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public interface CooldownService {
      * @return an Optional containing the cooldown if found
      * @throws CooldownException if {@code checkIfActive} is true and the cooldown is active
      */
-    Optional<CooldownDto> findCooldownByUserIdAndType(Long userId, CooldownType type, boolean checkIfActive);
+    Optional<CooldownDto> findCooldownByUserIdAndType(Long userId, CooldownType type, boolean checkIfActive) throws CooldownException;
 
     /**
      * Updates the ending date of a cooldown for a user and type.
@@ -33,7 +34,7 @@ public interface CooldownService {
      * @param userDto the user associated with the cooldown
      * @param type    the type of cooldown
      * @return the updated or newly created CooldownDto
-     * @throws jakarta.persistence.EntityNotFoundException if the cooldown with the given ID does not exist
+     * @throws EntityNotFoundException if the cooldown with the given ID does not exist
      */
     CooldownDto updateCooldownEndingDate(Long id, UserDto userDto, CooldownType type);
 }

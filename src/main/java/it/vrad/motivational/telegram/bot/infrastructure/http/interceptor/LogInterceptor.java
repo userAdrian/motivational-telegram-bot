@@ -1,8 +1,8 @@
 package it.vrad.motivational.telegram.bot.infrastructure.http.interceptor;
 
 import it.vrad.motivational.telegram.bot.config.properties.LogProperties;
-import it.vrad.motivational.telegram.bot.infrastructure.util.CommonUtility;
-import it.vrad.motivational.telegram.bot.infrastructure.util.StringUtility;
+import it.vrad.motivational.telegram.bot.shared.util.CommonUtility;
+import it.vrad.motivational.telegram.bot.shared.util.StringUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.http.HttpRequest;
@@ -38,7 +38,8 @@ public class LogInterceptor implements ClientHttpRequestInterceptor {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
+            throws IOException {
         // Log the outgoing request
         log.info(getLogMessageRequest(request, body));
 

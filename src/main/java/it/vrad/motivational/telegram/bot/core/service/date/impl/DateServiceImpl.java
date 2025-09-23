@@ -2,7 +2,7 @@ package it.vrad.motivational.telegram.bot.core.service.date.impl;
 
 import it.vrad.motivational.telegram.bot.config.properties.PhraseProperties;
 import it.vrad.motivational.telegram.bot.core.service.date.DateService;
-import it.vrad.motivational.telegram.bot.infrastructure.util.DateUtility;
+import it.vrad.motivational.telegram.bot.shared.util.DateUtility;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;

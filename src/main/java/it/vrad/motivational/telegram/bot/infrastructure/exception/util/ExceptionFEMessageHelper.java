@@ -3,7 +3,7 @@ package it.vrad.motivational.telegram.bot.infrastructure.exception.util;
 import it.vrad.motivational.telegram.bot.core.model.constants.CommandConstants;
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.UserRole;
 import it.vrad.motivational.telegram.bot.infrastructure.exception.constants.ExceptionMessageConstants;
-import it.vrad.motivational.telegram.bot.infrastructure.util.DateUtility;
+import it.vrad.motivational.telegram.bot.shared.util.DateUtility;
 
 import java.time.OffsetDateTime;
 

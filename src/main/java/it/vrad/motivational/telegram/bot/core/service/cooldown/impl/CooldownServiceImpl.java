@@ -1,17 +1,15 @@
 package it.vrad.motivational.telegram.bot.core.service.cooldown.impl;
 
 import it.vrad.motivational.telegram.bot.config.properties.CooldownProperties;
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
-import it.vrad.motivational.telegram.bot.core.service.date.DateService;
-import it.vrad.motivational.telegram.bot.infrastructure.exception.util.ExceptionLogMessageHelper;
 import it.vrad.motivational.telegram.bot.core.exception.CooldownException;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.CooldownDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.CooldownDao;
-import it.vrad.motivational.telegram.bot.core.service.cooldown.CooldownService;
-import it.vrad.motivational.telegram.bot.infrastructure.util.DateUtility;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
 import it.vrad.motivational.telegram.bot.core.model.factory.PersistenceDtoFactory;
-import jakarta.persistence.EntityNotFoundException;
+import it.vrad.motivational.telegram.bot.core.service.cooldown.CooldownService;
+import it.vrad.motivational.telegram.bot.core.service.date.DateService;
+import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.CooldownDao;
+import it.vrad.motivational.telegram.bot.shared.util.DateUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +35,8 @@ public class CooldownServiceImpl implements CooldownService {
      * @throws CooldownException {@inheritDoc}
      */
     @Override
-    public Optional<CooldownDto> findCooldownByUserIdAndType(Long userId, CooldownType type, boolean checkIfActive) throws CooldownException {
+    public Optional<CooldownDto> findCooldownByUserIdAndType(Long userId, CooldownType type, boolean checkIfActive)
+            throws CooldownException {
         // Retrieve cooldown for user and type
         Optional<CooldownDto> cooldownOpt = cooldownDao.findByUserIdAndType(userId, type);
 
@@ -94,8 +93,7 @@ public class CooldownServiceImpl implements CooldownService {
         CooldownDto cooldownDto = CooldownDto.builder()
                 .endingTime(getEndingTime(type))
                 .build();
-        return cooldownDao.updateCooldown(id, cooldownDto)
-                .orElseThrow(() -> new EntityNotFoundException(ExceptionLogMessageHelper.getCooldownNotFound(id)));
+        return cooldownDao.updateCooldown(id, cooldownDto);
     }
 
     /**

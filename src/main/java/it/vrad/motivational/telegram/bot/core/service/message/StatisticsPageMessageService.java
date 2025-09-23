@@ -1,7 +1,8 @@
 package it.vrad.motivational.telegram.bot.core.service.message;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.MessageDto;
-import it.vrad.motivational.telegram.bot.core.model.context.IncomingMessageContext;
+import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
+import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
 
 /**
  * Service interface for statistics page message operations.
@@ -9,10 +10,18 @@ import it.vrad.motivational.telegram.bot.core.model.context.IncomingMessageConte
 public interface StatisticsPageMessageService {
 
     /**
-     * Forwards the user to the statistics page.
+     * Generates the statistics page message DTO for the given user.
      *
-     * @param incomingMessageContext the context of the incoming message
-     * @return {@code null}
+     * @param user the user for whom to generate the statistics page message
+     * @return the generated {@link MessageDto} for the statistics page
      */
-    MessageDto forwardToStatisticsPage(IncomingMessageContext incomingMessageContext);
+    MessageDto generateStatisticsMessageDto(UserDto user);
+
+    /**
+     * Persists the Telegram file information after sending a message.
+     *
+     * @param sentMessage        the sent Telegram {@link Message}
+     * @param telegramFileIdSent the Telegram file ID associated with the sent message
+     */
+    void persistTelegramFile(Message sentMessage, String telegramFileIdSent);
 }

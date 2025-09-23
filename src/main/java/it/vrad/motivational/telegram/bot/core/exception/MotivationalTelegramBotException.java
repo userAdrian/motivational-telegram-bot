@@ -1,12 +1,14 @@
 package it.vrad.motivational.telegram.bot.core.exception;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class MotivationalTelegramBotException extends RuntimeException {
-    private final Long chatId;
+@Setter
+public class MotivationalTelegramBotException extends RuntimeException implements ContextAwareException {
+    private Long chatId;
 
-    public MotivationalTelegramBotException(String message, Throwable throwable){
+    public MotivationalTelegramBotException(String message, Throwable throwable) {
         super(message, throwable);
 
         chatId = null;

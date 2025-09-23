@@ -1,6 +1,8 @@
 package it.vrad.motivational.telegram.bot.core.service.phrase;
 
+import it.vrad.motivational.telegram.bot.core.exception.NoSuchPhraseException;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseDto;
+import it.vrad.motivational.telegram.bot.infrastructure.exception.constants.ExceptionMessageConstants;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,11 @@ public interface PhraseService {
      * @return an Optional containing a random PhraseDto, or empty if none available
      */
     Optional<PhraseDto> getRandomPhrase(Long userId);
+
+    default PhraseDto getRandomPhraseOrThrow(Long userId) throws NoSuchPhraseException {
+        return getRandomPhrase(userId)
+                .orElseThrow(() -> new NoSuchPhraseException(ExceptionMessageConstants.LOG_NO_PHRASES_FOUND_MESSAGE));
+    }
 
     /**
      * Saves a set of new phrases, ignoring duplicates based on text hash.
