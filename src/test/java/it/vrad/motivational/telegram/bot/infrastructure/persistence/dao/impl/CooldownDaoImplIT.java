@@ -5,6 +5,7 @@ import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownTy
 import it.vrad.motivational.telegram.bot.infrastructure.exception.util.ExceptionLogMessageHelper;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.BaseTestRepository;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.DaoTestConfig;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -16,13 +17,14 @@ import org.springframework.context.annotation.Import;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory.createCooldownDtoToSave;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory.createGenericCooldownDto;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.COOLDOWN_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.COOLDOWN_ID_NOT_PRESENT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ID_NOT_PRESENT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ID_WITHOUT_COOLDOWN;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.COOLDOWN_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.COOLDOWN_ID_NOT_PRESENT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID_NOT_PRESENT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID_WITHOUT_COOLDOWN;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEquals;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createCooldownDtoToSave;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createGenericCooldownDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -39,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * <p>
  * The tests use a test configuration that loads only the required beans and mappers for isolation.
  * Test data is provided via {@code data.sql} and
- * {@link it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory}.
+ * {@link PersistenceTestFactory}.
  */
 @Import(DaoTestConfig.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -84,7 +86,7 @@ class CooldownDaoImplIT extends BaseTestRepository {
 
             Optional<CooldownDto> found = cooldownDao.findByUserIdAndType(USER_ID, CooldownType.RANDOM_PHRASE);
             assertThat(found).isPresent();
-            assertRecursiveEqualsIgnoringId(found.get(), expected);
+            assertRecursiveEquals(found.get(), expected);
         }
 
         @Test

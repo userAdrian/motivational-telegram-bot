@@ -2,8 +2,8 @@ package it.vrad.motivational.telegram.bot.integration.telegram.api.impl;
 
 import it.vrad.motivational.telegram.bot.config.properties.TelegramProperties;
 import it.vrad.motivational.telegram.bot.infrastructure.exception.constants.ExceptionMessageConstants;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory;
+import it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import it.vrad.motivational.telegram.bot.infrastructure.testutil.FileTestUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.TelegramApiRequestTestFactory;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.TelegramIntegrationTestConfig;

@@ -2,9 +2,8 @@ package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.impl;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserPhraseDto;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.BaseTestRepository;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.DaoTestConfig;
-import jakarta.persistence.EntityNotFoundException;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,13 +14,14 @@ import org.springframework.context.annotation.Import;
 import java.util.List;
 import java.util.Optional;
 
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.PHRASE_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ID_NOT_PRESENT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_PHRASE_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_PHRASE_ID_TO_SAVE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.PHRASE_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID_NOT_PRESENT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_PHRASE_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_PHRASE_ID_TO_SAVE;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEquals;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createGenericUserPhraseDto;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Integration tests for {@link UserPhraseDaoImpl}.
@@ -35,8 +35,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * </ul>
  * <p>
  * The tests use a test configuration that loads only the required beans and mappers for isolation.
- * Test data is provided via {@code data.sql} and
- * {@link it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory}.
+ * Test data is provided via {@code data.sql} file and
+ * {@link PersistenceTestFactory}.
  */
 @Import(DaoTestConfig.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -72,12 +72,12 @@ class UserPhraseDaoImplIT extends BaseTestRepository {
         @Test
         @DisplayName("findById should return a non-empty Optional<UserPhraseDto> when UserPhrase exists")
         void findById_whenExists_returnsNonEmptyOptional() {
-            UserPhraseDto expected = PersistenceTestFactory.createGenericUserPhraseDto();
+            UserPhraseDto expected = createGenericUserPhraseDto();
 
             Optional<UserPhraseDto> foundOpt = userPhraseDao.findByUserPhraseId(USER_ID, PHRASE_ID);
 
             assertThat(foundOpt).isPresent();
-            assertRecursiveEqualsIgnoringId(foundOpt.get(), expected);
+            assertRecursiveEquals(foundOpt.get(), expected);
         }
 
         @Test

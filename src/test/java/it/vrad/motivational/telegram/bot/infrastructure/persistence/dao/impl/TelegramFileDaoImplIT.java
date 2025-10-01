@@ -2,7 +2,6 @@ package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.impl;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.TelegramFileDto;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.BaseTestRepository;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.DaoTestConfig;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.TelegramFile;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.repository.TelegramFileRepository;
@@ -15,9 +14,13 @@ import org.springframework.context.annotation.Import;
 
 import java.util.Optional;
 
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.TELEGRAM_FILE_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.TELEGRAM_FILE_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.TELEGRAM_FILE_NAME_NOT_PRESENT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_FILE_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_FILE_NAME_NOT_PRESENT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_FILE_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEquals;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEqualsIgnoringId;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createGenericTelegramFileDto;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createTelegramFileDtoToSave;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -48,7 +51,7 @@ class TelegramFileDaoImplIT extends BaseTestRepository {
         @Test
         @DisplayName("saveTelegramFile should persist and return the TelegramFileDto saved")
         void saveTelegramFile_whenValidInput_returnsTelegramFileDto() {
-            TelegramFileDto dto = PersistenceTestFactory.createTelegramFileDtoToSave();
+            TelegramFileDto dto = createTelegramFileDtoToSave();
 
             TelegramFileDto saved = telegramFileDao.saveTelegramFile(dto);
             assertRecursiveEqualsIgnoringId(saved, dto);
@@ -67,11 +70,11 @@ class TelegramFileDaoImplIT extends BaseTestRepository {
         @Test
         @DisplayName("getTelegramFileByName should return a non-empty Optional<TelegramFileDto> when the file exists")
         void getTelegramFileByName_whenFileExists_returnsNonEmptyOptional() {
-            TelegramFileDto expectedTelegramFile = PersistenceTestFactory.createGenericTelegramFileDto();
+            TelegramFileDto expectedTelegramFile = createGenericTelegramFileDto();
 
             Optional<TelegramFileDto> result = telegramFileDao.getTelegramFileByName(expectedTelegramFile.getName());
             assertThat(result).isPresent();
-            assertRecursiveEqualsIgnoringId(result.get(), expectedTelegramFile);
+            assertRecursiveEquals(result.get(), expectedTelegramFile);
         }
 
         @Test
@@ -85,7 +88,7 @@ class TelegramFileDaoImplIT extends BaseTestRepository {
         @DisplayName("getTelegramIdByName should return the telegramId when the file exists")
         void getTelegramIdByName_whenFileExists_returnsTelegramId() {
             String id = telegramFileDao.getTelegramIdByName(TELEGRAM_FILE_NAME);
-            assertThat(id).isEqualTo(TELEGRAM_FILE_ID);
+            assertThat(id).isEqualTo(TELEGRAM_FILE_TELEGRAM_ID);
         }
 
         @Test

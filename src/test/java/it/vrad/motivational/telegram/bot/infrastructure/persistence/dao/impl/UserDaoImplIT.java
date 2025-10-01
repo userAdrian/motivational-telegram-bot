@@ -5,8 +5,8 @@ import it.vrad.motivational.telegram.bot.core.model.constants.UserConstants;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.UserRole;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.BaseTestRepository;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.DaoTestConfig;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,8 +17,12 @@ import org.springframework.context.annotation.Import;
 import java.util.List;
 import java.util.Optional;
 
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.TELEGRAM_ID_NOT_PRESENT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_ID_NOT_PRESENT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEquals;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEqualsIgnoringId;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createGenericUserDto;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory.createUserDtoToUpdate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -33,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * </ul>
  * <p>
  * The tests use a test configuration that loads only the required beans and mappers for isolation.
- * Test data is provided via {@code data.sql} and {@link it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory}.
+ * Test data is provided via {@code data.sql} and {@link PersistenceTestFactory}.
  */
 @Import(DaoTestConfig.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -66,7 +70,7 @@ class UserDaoImplIT extends BaseTestRepository {
         @Test
         @DisplayName("findByTelegramId should return a non-empty Optional<UserDto> when the user exists")
         public void findByTelegramId_whenUserExists_returnsNonEmptyOptional() {
-            UserDto expectedUser = PersistenceTestFactory.createGenericUserDto();
+            UserDto expectedUser = createGenericUserDto();
 
             Optional<UserDto> userOpt = userDao.findByTelegramId(expectedUser.getTelegramId());
 
@@ -74,7 +78,7 @@ class UserDaoImplIT extends BaseTestRepository {
                     .as("User should be found by telegramId: " + expectedUser.getTelegramId())
                     .isPresent();
 
-            assertRecursiveEqualsIgnoringId(userOpt.get(), expectedUser);
+            assertRecursiveEquals(userOpt.get(), expectedUser);
         }
 
         @Test
@@ -111,7 +115,7 @@ class UserDaoImplIT extends BaseTestRepository {
         @DisplayName("update should update the user fields and return the updated UserDto")
         public void update_whenValidInput_returnsUserDto() throws Exception {
             // Prepare a User DTO containing the fields to update
-            UserDto update = PersistenceTestFactory.createUserDtoToUpdate();
+            UserDto update = createUserDtoToUpdate();
 
             UserDto updated = userDao.update(USER_TELEGRAM_ID, update);
             assertThat(updated.getUserRole()).isEqualTo(UserRole.ADMIN);
@@ -127,7 +131,7 @@ class UserDaoImplIT extends BaseTestRepository {
         @DisplayName("update should throw NoSuchUserException when user is not found")
         public void update_whenUserNotFound_throwsNoSuchUserException() throws Exception {
             // Prepare a User DTO containing the fields to update
-            UserDto update = PersistenceTestFactory.createUserDtoToUpdate();
+            UserDto update = createUserDtoToUpdate();
 
             NoSuchUserException ex = assertThrows(
                     NoSuchUserException.class,

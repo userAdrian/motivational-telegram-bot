@@ -2,9 +2,8 @@ package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.impl;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseDto;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.BaseTestRepository;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.DaoTestConfig;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.PHRASE_TEXT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEqualsIgnoringId;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -54,9 +56,9 @@ class PhraseDaoImplIT extends BaseTestRepository {
         @Test
         @DisplayName("findAllAvailablePhrases should return all available phrases for a user")
         void findAllAvailablePhrases_whenUserIdProvided_returnsPhrases() {
-            List<PhraseDto> result = phraseDao.findAllAvailablePhrases(PersistenceTestConstants.USER_ID);
+            List<PhraseDto> result = phraseDao.findAllAvailablePhrases(USER_ID);
             assertThat(result).isNotEmpty();
-            assertThat(result.getFirst().getText()).isEqualTo(PersistenceTestConstants.PHRASE_TEXT);
+            assertThat(result.getFirst().getText()).isEqualTo(PHRASE_TEXT);
         }
 
         @Test
@@ -64,7 +66,7 @@ class PhraseDaoImplIT extends BaseTestRepository {
         void findPhraseById_whenPhraseExists_returnsNonEmptyOptional() {
             PhraseDto expectedPhrase = PersistenceTestFactory.createGenericPhraseDto();
 
-            Optional<PhraseDto> result = phraseDao.findPhraseById(PersistenceTestConstants.PHRASE_ID);
+            Optional<PhraseDto> result = phraseDao.findPhraseById(expectedPhrase.getId());
             assertThat(result).isPresent();
             assertRecursiveEqualsIgnoringId(result.get(), expectedPhrase);
         }
@@ -74,7 +76,7 @@ class PhraseDaoImplIT extends BaseTestRepository {
         void findAll_returnsAllPhrases() {
             List<PhraseDto> result = phraseDao.findAll();
             assertThat(result).isNotEmpty();
-            assertThat(result.getFirst().getText()).isEqualTo(PersistenceTestConstants.PHRASE_TEXT);
+            assertThat(result.getFirst().getText()).isEqualTo(PHRASE_TEXT);
         }
     }
 

@@ -1,6 +1,5 @@
 package it.vrad.motivational.telegram.bot.integration.telegram.api;
 
-import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseDto;
 import it.vrad.motivational.telegram.bot.infrastructure.testutil.FileTestUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.TelegramConstants;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.enums.MediaTestType;
@@ -19,8 +18,8 @@ import java.io.File;
 
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.CALLBACK_QUERY_ID;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.CHAT_ID;
-import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.TEST_PHOTO_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.TELEGRAM_FILE_ID;
+import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.TEST_PHOTO_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.TEXT_MESSAGE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

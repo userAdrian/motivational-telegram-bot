@@ -102,6 +102,10 @@ class TelegramApiImplTest {
             verify(updateDispatcher).dispatch(any(Update.class));
         }
 
+        // --------------------------------------
+        // Webhook Test helpers
+        // --------------------------------------
+
         private String readSuccessRequestBody() {
             return FileTestUtility.readResourceAsString(WEBHOOK_REQUEST_200_PATH);
         }

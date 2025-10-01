@@ -2,7 +2,7 @@ package it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.impl;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.AuthorDto;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.BaseTestRepository;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.PersistenceTestFactory;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.dao.DaoTestConfig;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
