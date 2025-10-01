@@ -67,7 +67,7 @@ public class AdminCommandFacadeServiceImpl implements AdminCommandFacadeService 
 
     private Optional<MessageDto> doProcessLoadFilePhrasesCommand(IncomingMessageContext incomingMessageContext)
             throws NoSuchUserException, UserNotValidException, ReservedCommandException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
         Long chatId = MessageUtility.getChatId(message);
 
         // Validate user role for loading file phrases command
@@ -84,7 +84,7 @@ public class AdminCommandFacadeServiceImpl implements AdminCommandFacadeService 
 
     private Optional<MessageDto> doProcessLoadFilePhrasesCommandStepOne(IncomingMessageContext incomingMessageContext)
             throws NoSuchUserException, UserNotValidException, ReservedCommandException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
         Long chatId = MessageUtility.getChatId(message);
 
         // Validate user roles for loading file phrases command

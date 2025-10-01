@@ -1,7 +1,9 @@
 package it.vrad.motivational.telegram.bot.core.model.dto.persistence;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class TelegramFileDto {
 
@@ -9,10 +11,4 @@ public class TelegramFileDto {
     private String name;
     private String telegramId;
 
-    public TelegramFileDto(){};
-
-    public TelegramFileDto(String name, String telegramId){
-        this.name = name;
-        this.telegramId = telegramId;
-    }
 }

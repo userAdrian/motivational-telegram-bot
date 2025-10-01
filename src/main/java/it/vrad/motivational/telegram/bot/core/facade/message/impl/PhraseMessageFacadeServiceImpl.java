@@ -14,7 +14,6 @@ import it.vrad.motivational.telegram.bot.core.service.cooldown.CooldownManager;
 import it.vrad.motivational.telegram.bot.core.service.phrase.PhraseDeliveryManager;
 import it.vrad.motivational.telegram.bot.core.service.user.UserService;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
-import it.vrad.motivational.telegram.bot.integration.telegram.util.MessageUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class PhraseMessageFacadeServiceImpl implements PhraseMessageFacadeServic
 
     private Optional<MessageDto> doProcessRandomPhraseCommand(IncomingMessageContext incomingMessageContext)
             throws CooldownException, NoSuchUserException, UserNotValidException, NoSuchPhraseException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
 
         // Retrieve valid user
         UserDto user = userService.findValidUserIfAbsent(incomingMessageContext, message);

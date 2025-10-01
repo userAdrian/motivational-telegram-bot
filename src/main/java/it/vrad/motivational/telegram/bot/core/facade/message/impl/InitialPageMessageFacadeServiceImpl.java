@@ -53,7 +53,7 @@ public class InitialPageMessageFacadeServiceImpl implements InitialPageMessageFa
 
     private Optional<MessageDto> doProcessInitialMessage(IncomingMessageContext incomingMessageContext)
             throws UserNotValidException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
 
         // Save or validate the user based on the incoming message
         UserDto userFromDB = userService.saveOrValidateUser(message);
@@ -72,7 +72,7 @@ public class InitialPageMessageFacadeServiceImpl implements InitialPageMessageFa
 
     private Optional<MessageDto> doForwardToInitialPage(IncomingMessageContext incomingMessageContext)
             throws NoSuchUserException, UserNotValidException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
 
         // Find and validate the user from the database if absent inside the context
         UserDto userFromDB = userService.findValidUserIfAbsent(incomingMessageContext, message);

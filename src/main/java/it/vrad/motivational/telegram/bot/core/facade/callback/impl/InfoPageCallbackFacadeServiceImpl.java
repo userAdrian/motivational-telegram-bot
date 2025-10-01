@@ -5,7 +5,7 @@ import it.vrad.motivational.telegram.bot.core.facade.callback.base.BaseCallbackF
 import it.vrad.motivational.telegram.bot.core.facade.message.InfoPageMessageFacadeService;
 import it.vrad.motivational.telegram.bot.core.model.context.IncomingCallbackContext;
 import it.vrad.motivational.telegram.bot.core.model.dto.CallbackQueryDto;
-import it.vrad.motivational.telegram.bot.core.model.factory.ObjectsFactory;
+import it.vrad.motivational.telegram.bot.core.model.factory.ContextFactory;
 import it.vrad.motivational.telegram.bot.core.service.telegram.TelegramService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class InfoPageCallbackFacadeServiceImpl extends BaseCallbackFacadeService
         return handleCallbackAction(
                 incomingCallbackContext,
                 "info page callback",
-                message -> infoPageMessageFacadeService.forwardToInfoPage(ObjectsFactory.buildIncomingMessageContext(message))
+                message -> infoPageMessageFacadeService.forwardToInfoPage(ContextFactory.buildIncomingMessageContext(message))
         );
     }
 }

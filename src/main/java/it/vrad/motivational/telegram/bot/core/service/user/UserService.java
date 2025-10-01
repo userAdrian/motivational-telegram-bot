@@ -83,7 +83,7 @@ public interface UserService {
      */
     default UserDto findValidUserIfAbsent(IncomingMessageContext incomingMessageContext, Set<UserRole> userRoles)
             throws ReservedCommandException, NoSuchUserException, UserNotValidException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
         // find valid user
         UserDto user = findValidUserIfAbsent(incomingMessageContext, message);
 

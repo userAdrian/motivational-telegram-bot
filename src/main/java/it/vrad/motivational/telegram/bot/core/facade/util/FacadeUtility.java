@@ -50,7 +50,7 @@ public class FacadeUtility {
                                                     CheckedFunction<IncomingMessageContext, Optional<MessageDto>> action) {
         Objects.requireNonNull(incomingMessageContext);
 
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
         Long chatId = MessageUtility.getChatId(message);
 
         logStartProcess(processName, chatId);
@@ -82,7 +82,7 @@ public class FacadeUtility {
                                     CheckedConsumer<IncomingMessageContext> action) {
         Objects.requireNonNull(incomingMessageContext);
 
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
         Long chatId = MessageUtility.getChatId(message);
 
         logStartProcess(processName, chatId);

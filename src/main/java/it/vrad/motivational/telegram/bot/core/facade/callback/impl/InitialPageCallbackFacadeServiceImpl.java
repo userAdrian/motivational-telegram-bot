@@ -5,7 +5,7 @@ import it.vrad.motivational.telegram.bot.core.facade.callback.base.BaseCallbackF
 import it.vrad.motivational.telegram.bot.core.facade.message.InitialPageMessageFacadeService;
 import it.vrad.motivational.telegram.bot.core.model.context.IncomingCallbackContext;
 import it.vrad.motivational.telegram.bot.core.model.dto.CallbackQueryDto;
-import it.vrad.motivational.telegram.bot.core.model.factory.ObjectsFactory;
+import it.vrad.motivational.telegram.bot.core.model.factory.ContextFactory;
 import it.vrad.motivational.telegram.bot.core.service.telegram.TelegramService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class InitialPageCallbackFacadeServiceImpl extends BaseCallbackFacadeServ
         return handleCallbackAction(
                 incomingCallbackContext,
                 "initial page callback",
-                message -> initialPageMessageFacadeService.forwardToInitialPage(ObjectsFactory.buildIncomingMessageContext(message))
+                message -> initialPageMessageFacadeService.forwardToInitialPage(ContextFactory.buildIncomingMessageContext(message))
         );
     }
 

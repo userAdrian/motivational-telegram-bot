@@ -1,11 +1,6 @@
 package it.vrad.motivational.telegram.bot.core.model.factory;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.AuthorDto;
-import it.vrad.motivational.telegram.bot.core.model.enums.PhraseCSVHeader;
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.ChatType;
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.PhraseType;
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.UserRole;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.ChatDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.CooldownDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseDto;
@@ -13,11 +8,16 @@ import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseSentHi
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.TelegramFileDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserPhraseDto;
+import it.vrad.motivational.telegram.bot.core.model.enums.PhraseCSVHeader;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.ChatType;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.PhraseType;
+import it.vrad.motivational.telegram.bot.core.model.enums.persistence.UserRole;
+import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.ids.UserPhraseId;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Chat;
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
-import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.ids.UserPhraseId;
-import it.vrad.motivational.telegram.bot.shared.util.CommonUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.util.MessageUtility;
+import it.vrad.motivational.telegram.bot.shared.util.CommonUtility;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
@@ -40,7 +40,10 @@ public class PersistenceDtoFactory {
      * @return a TelegramFileDto instance
      */
     public static TelegramFileDto buildTelegramFileDto(String fileName, Message message) {
-        return new TelegramFileDto(fileName, MessageUtility.getLastPhotoId(message));
+        return TelegramFileDto.builder()
+                .name(fileName)
+                .telegramId(MessageUtility.getLastPhotoId(message))
+                .build();
     }
 
     /**
@@ -82,7 +85,7 @@ public class PersistenceDtoFactory {
     public static ChatDto buildChatDto(Long chatId, String type) {
         return ChatDto.builder()
                 .telegramId(chatId)
-                .type(ChatType.fromValue(type))
+                .type(ChatType.fromTelegramValue(type))
                 .build();
     }
 

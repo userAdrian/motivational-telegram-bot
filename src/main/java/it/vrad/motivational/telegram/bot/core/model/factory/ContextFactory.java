@@ -8,10 +8,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * Factory class for creating objects.
+ * Factory class for creating context objects.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ObjectsFactory {
+public class ContextFactory {
 
     /**
      * Builds an IncomingMessageContext from a Message object.
@@ -21,7 +21,7 @@ public class ObjectsFactory {
      */
     public static IncomingMessageContext buildIncomingMessageContext(Message message){
         return IncomingMessageContext.builder()
-                .messageSent(message)
+                .sentMessage(message)
                 .build();
     }
 

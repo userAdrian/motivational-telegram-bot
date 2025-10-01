@@ -12,7 +12,7 @@ import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Upd
 import it.vrad.motivational.telegram.bot.infrastructure.cache.CacheService;
 import it.vrad.motivational.telegram.bot.integration.telegram.util.MessageUtility;
 
-import it.vrad.motivational.telegram.bot.core.model.factory.ObjectsFactory;
+import it.vrad.motivational.telegram.bot.core.model.factory.ContextFactory;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
@@ -53,7 +53,7 @@ public class MessageProcessor implements UpdateProcessor {
 
         try {
             // Get the appropriate action function for the message and execute it
-            getMessageActionFunction(message.getText(), chatId).apply(ObjectsFactory.buildIncomingMessageContext(message));
+            getMessageActionFunction(message.getText(), chatId).apply(ContextFactory.buildIncomingMessageContext(message));
         } catch (Exception ex) {
             // Handle exceptions in a context-aware manner
             ExceptionProcessorUtility.handleUpdateProcessorException(ex, chatId);

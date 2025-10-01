@@ -6,7 +6,7 @@ import it.vrad.motivational.telegram.bot.core.facade.message.admin.AdminCommandF
 import it.vrad.motivational.telegram.bot.core.facade.message.admin.AdminPageMessageFacadeService;
 import it.vrad.motivational.telegram.bot.core.model.context.IncomingCallbackContext;
 import it.vrad.motivational.telegram.bot.core.model.dto.CallbackQueryDto;
-import it.vrad.motivational.telegram.bot.core.model.factory.ObjectsFactory;
+import it.vrad.motivational.telegram.bot.core.model.factory.ContextFactory;
 import it.vrad.motivational.telegram.bot.core.service.telegram.TelegramService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class AdminPageCallbackFacadeServiceImpl extends BaseCallbackFacadeServic
                 incomingCallbackContext,
                 "admin page callback",
                 message -> adminPageMessageFacadeService.forwardToAdminPage(
-                        ObjectsFactory.buildIncomingMessageContext(message))
+                        ContextFactory.buildIncomingMessageContext(message))
         );
     }
 
@@ -61,7 +61,7 @@ public class AdminPageCallbackFacadeServiceImpl extends BaseCallbackFacadeServic
                 incomingCallbackContext,
                 "load phrases file button callback",
                 message -> adminCommandFacadeService.processLoadFilePhrasesCommand(
-                        ObjectsFactory.buildIncomingMessageContext(message))
+                        ContextFactory.buildIncomingMessageContext(message))
         );
     }
 }

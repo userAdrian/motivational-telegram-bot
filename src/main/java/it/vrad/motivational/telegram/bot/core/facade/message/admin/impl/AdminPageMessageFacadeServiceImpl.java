@@ -52,7 +52,7 @@ public class AdminPageMessageFacadeServiceImpl implements AdminPageMessageFacade
         // Generate the welcome message DTO for the user
         MessageDto messageDto = adminMessageService.generateAdminPageMessageDto(userDto);
 
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
         // Edit the message media to show the welcome message
         Message editedMessage = telegramService.editMessageMedia(message, messageDto);
 

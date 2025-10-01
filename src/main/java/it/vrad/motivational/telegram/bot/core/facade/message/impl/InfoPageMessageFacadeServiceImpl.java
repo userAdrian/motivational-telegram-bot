@@ -40,7 +40,7 @@ public class InfoPageMessageFacadeServiceImpl implements InfoPageMessageFacadeSe
 
     private void doForwardToInfoPage(IncomingMessageContext incomingMessageContext)
             throws NoSuchUserException, UserNotValidException {
-        Message message = incomingMessageContext.getMessageSent();
+        Message message = incomingMessageContext.getSentMessage();
 
         // Find and validate the user from the database if absent inside the context
         UserDto userFromDB = userService.findValidUserIfAbsent(incomingMessageContext, message);

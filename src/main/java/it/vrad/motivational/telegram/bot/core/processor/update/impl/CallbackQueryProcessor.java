@@ -12,7 +12,7 @@ import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Cal
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Update;
 import it.vrad.motivational.telegram.bot.integration.telegram.util.CallbackUtility;
 
-import it.vrad.motivational.telegram.bot.core.model.factory.ObjectsFactory;
+import it.vrad.motivational.telegram.bot.core.model.factory.ContextFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -77,7 +77,7 @@ public class CallbackQueryProcessor implements UpdateProcessor {
      */
     private void executeAction(List<CallbackActionFunction> actions, int stepIndex, CallbackQuery callbackQuery) {
         // Build the parameter DTO and apply the action function
-        actions.get(stepIndex).apply(ObjectsFactory.buildIncomingCallbackContext(callbackQuery));
+        actions.get(stepIndex).apply(ContextFactory.buildIncomingCallbackContext(callbackQuery));
     }
 
     /**

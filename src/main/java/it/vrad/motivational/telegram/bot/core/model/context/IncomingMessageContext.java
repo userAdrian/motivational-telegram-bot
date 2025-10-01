@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class IncomingMessageContext {
-    private Message messageSent;
+    private Message sentMessage;
     private UserDto userFromDB;
 }
