@@ -92,11 +92,10 @@ class TelegramApiImplTest {
             String validRequest = readSuccessRequestBody();
             performWebhookPost(validRequest)
                     .andExpect(status().isNoContent())
-                    .andExpect(result -> {
-                                assertThat(result.getResolvedException())
-                                        .isInstanceOf(NoSuchUserException.class)
-                                        .hasFieldOrPropertyWithValue("telegramId", USER_TELEGRAM_ID);
-                            }
+                    .andExpect(result ->
+                            assertThat(result.getResolvedException())
+                                    .isInstanceOf(NoSuchUserException.class)
+                                    .hasFieldOrPropertyWithValue("telegramId", USER_TELEGRAM_ID)
                     );
 
             verify(updateDispatcher).dispatch(any(Update.class));

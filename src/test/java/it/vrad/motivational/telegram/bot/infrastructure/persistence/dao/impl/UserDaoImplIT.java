@@ -129,7 +129,7 @@ class UserDaoImplIT extends BaseTestRepository {
 
         @Test
         @DisplayName("update should throw NoSuchUserException when user is not found")
-        public void update_whenUserNotFound_throwsNoSuchUserException() throws Exception {
+        public void update_whenUserNotFound_throwsNoSuchUserException() {
             // Prepare a User DTO containing the fields to update
             UserDto update = createUserDtoToUpdate();
 
