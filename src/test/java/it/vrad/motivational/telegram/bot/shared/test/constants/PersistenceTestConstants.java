@@ -1,4 +1,4 @@
-package it.vrad.motivational.telegram.bot.infrastructure.persistence.constants;
+package it.vrad.motivational.telegram.bot.shared.test.constants;
 
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.ChatType;
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.PhraseType;
@@ -47,6 +47,7 @@ public class PersistenceTestConstants {
     public static final UserRole SAVE_USER_ROLE = UserRole.MEMBER;
 
     // === Chat ===
+    public static final Long CHAT_ID = 1L;
     public static final Long CHAT_TELEGRAM_ID = 22222L;
     public static final ChatType CHAT_TYPE = ChatType.PRIVATE;
     public static final Long SAVE_CHAT_TELEGRAM_ID = 4288821L;
@@ -54,10 +55,11 @@ public class PersistenceTestConstants {
 
     // === Telegram File ===
     public static final String TELEGRAM_FILE_NAME_NOT_PRESENT = "not_found";
+    public static final Long TELEGRAM_FILE_ID = 1L;
     public static final String TELEGRAM_FILE_NAME = "first_test_file";
-    public static final String TELEGRAM_FILE_ID = "tg_file_id_123";
+    public static final String TELEGRAM_FILE_TELEGRAM_ID = "tg_file_id_123";
     public static final String SAVE_TELEGRAM_FILE_NAME = "save_first_test_file";
-    public static final String SAVE_TELEGRAM_FILE_ID = "save_tg_file_id_321111";
+    public static final String SAVE_TELEGRAM_FILE_TELEGRAM_ID = "save_tg_file_id_321111";
 
     // === Phrase Sent History ===
     public static final Long SAVE_PHRASE_SENT_HISTORY_PHRASE_ID = 100L;

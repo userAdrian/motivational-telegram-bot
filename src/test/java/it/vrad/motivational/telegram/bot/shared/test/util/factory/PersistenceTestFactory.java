@@ -1,4 +1,4 @@
-package it.vrad.motivational.telegram.bot.infrastructure.persistence;
+package it.vrad.motivational.telegram.bot.shared.test.util.factory;
 
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.AuthorDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.ChatDto;
@@ -8,7 +8,6 @@ import it.vrad.motivational.telegram.bot.core.model.dto.persistence.PhraseSentHi
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.TelegramFileDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserDto;
 import it.vrad.motivational.telegram.bot.core.model.dto.persistence.UserPhraseDto;
-import it.vrad.motivational.telegram.bot.core.model.enums.persistence.ChatType;
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.CooldownType;
 import it.vrad.motivational.telegram.bot.core.model.enums.persistence.UserRole;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.entity.ids.UserPhraseId;
@@ -17,36 +16,42 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.AUTHOR_FIRST_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.AUTHOR_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.AUTHOR_LAST_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.CHAT_TELEGRAM_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.CHAT_TYPE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.COOLDOWN_ENDING_TIME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.PHRASE_TEXT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.PHRASE_TYPE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_AUTHOR_FIRST_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_AUTHOR_LAST_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_CHAT_TELEGRAM_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_CHAT_TYPE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_COOLDOWN_ENDING_TIME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_FIRST_PHRASE_TEXT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_FIRST_PHRASE_TYPE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_PHRASE_SENT_HISTORY_PHRASE_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_PHRASE_SENT_HISTORY_SENDING_DATE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_PHRASE_SENT_HISTORY_USER_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_PHRASE_TEXT;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_PHRASE_TYPE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_TELEGRAM_FILE_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_TELEGRAM_FILE_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_USER_ROLE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.SAVE_USER_TELEGRAM_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.TELEGRAM_FILE_ID;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.TELEGRAM_FILE_NAME;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ID_WITHOUT_COOLDOWN;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_PHRASE_ID_TO_SAVE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_ROLE;
-import static it.vrad.motivational.telegram.bot.infrastructure.persistence.constants.PersistenceTestConstants.USER_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.AUTHOR_FIRST_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.AUTHOR_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.AUTHOR_LAST_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.CHAT_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.CHAT_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.CHAT_TYPE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.COOLDOWN_ENDING_TIME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.COOLDOWN_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.PHRASE_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.PHRASE_TEXT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.PHRASE_TYPE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_AUTHOR_FIRST_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_AUTHOR_LAST_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_CHAT_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_CHAT_TYPE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_COOLDOWN_ENDING_TIME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_FIRST_PHRASE_TEXT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_FIRST_PHRASE_TYPE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_PHRASE_SENT_HISTORY_PHRASE_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_PHRASE_SENT_HISTORY_SENDING_DATE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_PHRASE_SENT_HISTORY_USER_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_PHRASE_TEXT;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_PHRASE_TYPE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_TELEGRAM_FILE_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_TELEGRAM_FILE_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_USER_ROLE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.SAVE_USER_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_FILE_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_FILE_NAME;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.TELEGRAM_FILE_TELEGRAM_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ID_WITHOUT_COOLDOWN;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_PHRASE_ID;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_PHRASE_ID_TO_SAVE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_ROLE;
+import static it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants.USER_TELEGRAM_ID;
 
 /**
  * Factory for creating test DTOs and IDs for persistence layer integration tests.
@@ -58,9 +63,10 @@ public class PersistenceTestFactory {
     // === User ===
     public static UserDto createGenericUserDto() {
         return UserDto.builder()
+                .id(USER_ID)
                 .telegramId(USER_TELEGRAM_ID)
                 .userRole(USER_ROLE)
-                .chatDto(createChatDto(CHAT_TELEGRAM_ID, CHAT_TYPE))
+                .chatDto(createGenericChatDto())
                 .build();
     }
 
@@ -68,7 +74,7 @@ public class PersistenceTestFactory {
         return UserDto.builder()
                 .telegramId(SAVE_USER_TELEGRAM_ID)
                 .userRole(SAVE_USER_ROLE)
-                .chatDto(createChatDto(SAVE_CHAT_TELEGRAM_ID, SAVE_CHAT_TYPE))
+                .chatDto(createGenericChatDtoToSave())
                 .build();
     }
 
@@ -79,16 +85,25 @@ public class PersistenceTestFactory {
     }
 
     // === Chat ===
-    public static ChatDto createChatDto(Long telegramId, ChatType chatType) {
+    public static ChatDto createGenericChatDto() {
         return ChatDto.builder()
-                .telegramId(telegramId)
-                .type(chatType)
+                .id(CHAT_ID)
+                .telegramId(CHAT_TELEGRAM_ID)
+                .type(CHAT_TYPE)
+                .build();
+    }
+
+    public static ChatDto createGenericChatDtoToSave() {
+        return ChatDto.builder()
+                .telegramId(SAVE_CHAT_TELEGRAM_ID)
+                .type(SAVE_CHAT_TYPE)
                 .build();
     }
 
     // === Phrase ===
     public static PhraseDto createGenericPhraseDto() {
         return PhraseDto.builder()
+                .id(PHRASE_ID)
                 .type(PHRASE_TYPE)
                 .text(PHRASE_TEXT)
                 .disabled(false)
@@ -139,11 +154,18 @@ public class PersistenceTestFactory {
 
     // === Telegram File ===
     public static TelegramFileDto createGenericTelegramFileDto() {
-        return new TelegramFileDto(TELEGRAM_FILE_NAME, TELEGRAM_FILE_ID);
+        return TelegramFileDto.builder()
+                .id(TELEGRAM_FILE_ID)
+                .name(TELEGRAM_FILE_NAME)
+                .telegramId(TELEGRAM_FILE_TELEGRAM_ID)
+                .build();
     }
 
     public static TelegramFileDto createTelegramFileDtoToSave() {
-        return new TelegramFileDto(SAVE_TELEGRAM_FILE_NAME, SAVE_TELEGRAM_FILE_ID);
+        return TelegramFileDto.builder()
+                .name(SAVE_TELEGRAM_FILE_NAME)
+                .telegramId(SAVE_TELEGRAM_FILE_TELEGRAM_ID)
+                .build();
     }
 
     // === Phrase Sent History ===
@@ -158,6 +180,7 @@ public class PersistenceTestFactory {
     // === Cooldown ===
     public static CooldownDto createGenericCooldownDto(CooldownType type) {
         return CooldownDto.builder()
+                .id(COOLDOWN_ID)
                 .type(type)
                 .endingTime(COOLDOWN_ENDING_TIME)
                 .userDto(createGenericUserDto())
@@ -175,6 +198,7 @@ public class PersistenceTestFactory {
     // === UserPhrase ===
     public static UserPhraseDto createGenericUserPhraseDto() {
         return UserPhraseDto.builder()
+                .id(USER_PHRASE_ID)
                 .read(false)
                 .readCount(2)
                 .userDto(createGenericUserDto())
