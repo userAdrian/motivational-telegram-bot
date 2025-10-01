@@ -1,25 +1,21 @@
 package it.vrad.motivational.telegram.bot.core.model.enums.persistence;
 
+import it.vrad.motivational.telegram.bot.core.model.enums.TelegramValued;
+import it.vrad.motivational.telegram.bot.core.model.enums.util.EnumValueMapper;
 import lombok.Getter;
 
 @Getter
-public enum ChatType {
+public enum ChatType implements TelegramValued {
     PRIVATE("private");
 
-    private final String value;
+    private final String telegramValue; //telegram value
 
-    ChatType(String value){
-        this.value = value;
+    ChatType(String telegramValue) {
+        this.telegramValue = telegramValue;
     }
 
-    public static ChatType fromValue(String value){
-        for(ChatType chatType : ChatType.values()){
-            if(chatType.getValue().equalsIgnoreCase(value)){
-                return chatType;
-            }
-        }
-
-        throw new IllegalArgumentException("No ChatType enum found for value: " + value);
+    public static ChatType fromTelegramValue(String value) {
+        return EnumValueMapper.fromTelegramValue(ChatType.class, value);
     }
 
 }
