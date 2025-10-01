@@ -17,14 +17,14 @@ public class ContextTestFactory {
     // === IncomingMessageContext ===
     public static IncomingMessageContext createGenericIncomingMessageCtx() {
         return IncomingMessageContext.builder()
-                .sentMessage(TelegramTestObjectFactory.createGenericMessage())
+                .sentMessage(TelegramTestDataFactory.createGenericMessage())
                 .userFromDB(PersistenceTestFactory.createGenericUserDto())
                 .build();
     }
 
     public static IncomingMessageContext createGenericIncomingMessageCtxNoUser() {
         return IncomingMessageContext.builder()
-                .sentMessage(TelegramTestObjectFactory.createGenericMessage())
+                .sentMessage(TelegramTestDataFactory.createGenericMessage())
                 .build();
     }
 

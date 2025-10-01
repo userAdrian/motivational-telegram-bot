@@ -22,7 +22,7 @@ import static it.vrad.motivational.telegram.bot.shared.test.constants.Persistenc
  * The class is non-instantiable and exposes only static helper methods.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TelegramTestObjectFactory {
+public class TelegramTestDataFactory {
 
     // === Message ===
     public static Message createGenericMessage() {
@@ -65,7 +65,7 @@ public class TelegramTestObjectFactory {
         Chat chat = new Chat();
 
         chat.setId(CHAT_TELEGRAM_ID);
-        chat.setType(CHAT_TYPE.getValue());
+        chat.setType(CHAT_TYPE.getTelegramValue());
 
         return chat;
     }
@@ -74,7 +74,7 @@ public class TelegramTestObjectFactory {
         Chat chat = new Chat();
 
         chat.setId(SAVE_CHAT_TELEGRAM_ID);
-        chat.setType(SAVE_CHAT_TYPE.getValue());
+        chat.setType(SAVE_CHAT_TYPE.getTelegramValue());
 
         return chat;
     }

@@ -26,8 +26,8 @@ import static it.vrad.motivational.telegram.bot.shared.test.constants.Persistenc
 import static it.vrad.motivational.telegram.bot.shared.test.util.TestAssertions.assertRecursiveEquals;
 import static it.vrad.motivational.telegram.bot.shared.test.util.factory.ContextTestFactory.createGenericIncomingMessageCtx;
 import static it.vrad.motivational.telegram.bot.shared.test.util.factory.ContextTestFactory.createGenericIncomingMessageCtxNoUser;
-import static it.vrad.motivational.telegram.bot.shared.test.util.factory.TelegramTestObjectFactory.createGenericMessage;
-import static it.vrad.motivational.telegram.bot.shared.test.util.factory.TelegramTestObjectFactory.createGenericMessageNewUser;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.TelegramTestDataFactory.createGenericMessage;
+import static it.vrad.motivational.telegram.bot.shared.test.util.factory.TelegramTestDataFactory.createGenericMessageNewUser;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
