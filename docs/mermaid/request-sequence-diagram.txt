@@ -1,18 +1,21 @@
 sequenceDiagram
     participant TG as Telegram Server
-    participant N as Nginx Proxy
+    participant N1 as Nginx Proxy
     participant SB as Spring Boot Cluster
+    participant N2 as Nginx Proxy
     participant API as Telegram API
 
     %% Webhook in
-    TG->>N: Send webhook update
-    N->>SB: Forward update to one Spring Boot instance (LB)
-    
+    TG->>N1: Send webhook update
+    N1->>SB: Forward update to one Spring Boot instance (LB)
+
     %% Processing in Spring Boot
     SB->>SB: Process update / business logic
-    SB->>API: Send message or response via Nginx
+    SB->>N2: Send message or response via Nginx
+    N2->>API: Replace bot token placeholder and forward request
 
     %% Telegram API response
-    API-->>SB: Acknowledge delivery
-    SB-->>N: Response complete
-    N-->>TG: Return 200 OK
+    API-->>N2: Acknowledge delivery
+    N2-->>SB: Acknowledge delivery
+    SB-->>N1: Response complete
+    N1-->>TG: Return 200 OK
