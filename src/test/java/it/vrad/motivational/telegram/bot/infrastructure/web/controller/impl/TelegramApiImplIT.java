@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(TelegramApiImplTestConfig.class)
 @WebMvcTest(TelegramApiImpl.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TelegramApiImplTest {
+class TelegramApiImplIT {
     public static final String WEBHOOK_ENDPOINT = "/api/telegram/webhook";
 
     private final MockMvc mockMvc;
