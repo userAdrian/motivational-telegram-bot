@@ -88,6 +88,7 @@ Bot Telegram sviluppato in **Java + Spring Boot**, che invia frasi motivazionali
 - **JDK 21+**
 - **Maven 3.9+**
 - **Database relazionale** (PostgreSQL, MySQL o H2 per sviluppo)
+- **Docker** (richiesto per il lancio degli IntegrationTest)
 - Token Telegram Bot (ottenuto da [BotFather](https://core.telegram.org/bots#botfather))
 
 ### 2. Profili disponibili
@@ -124,10 +125,96 @@ git clone https://github.com/userAdrian/motivational-telegram-bot.git
 - Assicurati che le credenziali del database siano impostate correttamente tramite le environment variables o nel file `application-<profilo>.properties`.
 
 ### 5. Avvio del progetto
+
+Unix / macOS (bash):
+
 ```bash
+    SPRING_PROFILES_ACTIVE=profile \
+    REDIS_USERNAME=your_redis_username \
+    REDIS_PASSWORD=your_redis_password \
+    DB_USERNAME=your_db_user \
+    DB_PASSWORD=your_db_password \
+    SERVER_PORT=server_port \
+    mvn spring-boot:run
+```
+
+Windows (CMD):
+
+```cmd
+set SPRING_PROFILES_ACTIVE=profile
+set REDIS_USERNAME=your_redis_username
+set REDIS_PASSWORD=your_redis_password
+set DB_USERNAME=your_db_user
+set DB_PASSWORD=your_db_password
+set SERVER_PORT=server_port
 mvn spring-boot:run
 ```
+
 Il progetto leggerà il profilo specificato tramite `SPRING_PROFILES_ACTIVE` e utilizzerà le impostazioni dedicate.
+
+## Distribuzione con Docker
+
+- [Dockerfile](Dockerfile) con istruzioni per creare l'immagine Docker
+
+### Build del progetto
+
+Unix / macOS (bash) / Windows (CMD):
+
+```bash
+mvn package
+```
+
+> **Nota:**
+> - Assicurati che `mvn package` completi correttamente prima di costruire l'immagine Docker.
+> - Per iterazioni locali più veloci puoi eseguire `mvn -DskipTests package` per saltare i test (usalo con cautela).
+
+### Creare l'immagine
+
+Unix / macOS (bash) / Windows (CMD):
+
+```bash
+docker build -t motivational-telegram-bot:latest .
+```
+
+- `-t` etichetta l'immagine (name[:tag]) così puoi riferirti ad essa al momento dell'esecuzione.
+
+### Avviare il container
+
+Unix / macOS (bash):
+
+```bash
+docker run -d --name motivational-telegram-bot \
+  -e SPRING_PROFILES_ACTIVE=profile \
+  -e REDIS_USERNAME=your_redis_username -e REDIS_PASSWORD=your_redis_password \
+  -e DB_USERNAME=your_db_user -e DB_PASSWORD=your_db_password \
+  -p host_port:container_port \
+  --restart unless-stopped \
+  motivational-telegram-bot:latest
+```
+
+Windows (CMD):
+
+```cmd
+docker run -d --name motivational-telegram-bot ^
+  -e SPRING_PROFILES_ACTIVE=profile ^
+  -e REDIS_USERNAME=your_redis_username -e REDIS_PASSWORD=your_redis_password ^
+  -e DB_USERNAME=your_db_user -e DB_PASSWORD=your_db_password ^
+  -p host_port:container_port ^
+  --restart unless-stopped ^
+  motivational-telegram-bot:latest
+```
+
+#### Note
+
+- Sostituisci `container_port` con la porta su cui l'applicazione ascolta.
+- Se imposti `SERVER_PORT` come variabile d'ambiente all'interno del container, deve corrispondere alla porta container
+  usata in `-p host_port:container_port` (la mappatura `-p` controlla il networking host->container).
+- `-p host_port:container_port` mappa una porta dell'host alla porta del container (esempio: `-p 8080:8080`).
+- `--restart unless-stopped` riavvia il container quando il daemon Docker viene riavviato o in caso di crash, ma **non**
+  lo riavvia se lo hai fermato manualmente.
+
+Quando il container deve accedere ai servizi sulla macchina host, sostituisci `localhost` con `host.docker.internal`
+dove necessario
 
 ---
 

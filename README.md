@@ -88,6 +88,7 @@ Telegram bot developed in **Java + Spring Boot**, which sends motivational quote
 - **JDK 21+**
 - **Maven 3.9+**
 - **Relational Database** (PostgreSQL, MySQL or H2 for development)
+- **Docker** (required for running the IntegrationTest)
 - Telegram Bot Token (obtained from [BotFather](https://core.telegram.org/bots#botfather))
 
 ### 2. Available Profiles
@@ -124,10 +125,97 @@ git clone https://github.com/userAdrian/motivational-telegram-bot.git
 - Make sure the database credentials are set correctly via environment variables or in the `application-<profile>.properties` file.
 
 ### 5. Start the Project
+
+Unix / macOS (bash):
+
 ```bash
+    SPRING_PROFILES_ACTIVE=profile \
+    REDIS_USERNAME=your_redis_username \
+    REDIS_PASSWORD=your_redis_password \
+    DB_USERNAME=your_db_user \
+    DB_PASSWORD=your_db_password \
+    SERVER_PORT=server_port \
+    mvn spring-boot:run
+```
+
+Windows (CMD):
+
+```cmd
+set SPRING_PROFILES_ACTIVE=profile
+set REDIS_USERNAME=your_redis_username
+set REDIS_PASSWORD=your_redis_password
+set DB_USERNAME=your_db_user
+set DB_PASSWORD=your_db_password
+set SERVER_PORT=server_port
 mvn spring-boot:run
 ```
+
 The project will read the profile specified via `SPRING_PROFILES_ACTIVE` and use the dedicated settings.
+
+## Deployment with Docker
+
+- [Dockerfile](Dockerfile) with instructions to create the docker image
+
+### Build the project
+
+Unix / macOS (bash) / Windows (CMD):
+
+```bash
+  mvn package
+```
+
+> **Note:**
+> - Ensure `mvn package` completes successfully before building a Docker image.
+> - For faster local iterations you can run `mvn -DskipTests package` to skip tests (use with caution).
+
+### Create the image
+
+Unix / macOS (bash) / Windows (CMD):
+
+```bash
+  docker build -t motivational-telegram-bot:latest .
+```
+
+- `-t` tags the image (name[:tag]) so you can refer to it when running.
+
+### Run the container
+
+Unix / macOS (bash):
+
+```bash
+    docker run -d --name motivational-telegram-bot \
+      -e SPRING_PROFILES_ACTIVE=profile \
+      -e REDIS_USERNAME=your_redis_username -e REDIS_PASSWORD=your_redis_password \
+      -e DB_USERNAME=your_db_user -e DB_PASSWORD=your_db_password \
+      -e SERVER_PORT=container_port \
+      -p host_port:container_port \
+      --restart unless-stopped \
+      motivational-telegram-bot:latest
+```
+
+Windows (CMD):
+
+```cmd
+docker run -d --name motivational-telegram-bot ^
+  -e SPRING_PROFILES_ACTIVE=profile ^
+  -e REDIS_USERNAME=your_redis_username -e REDIS_PASSWORD=your_redis_password ^
+  -e DB_USERNAME=your_db_user -e DB_PASSWORD=your_db_password ^
+  -e SERVER_PORT=container_port ^
+  -p host_port:container_port ^
+  --restart unless-stopped ^
+  motivational-telegram-bot:latest
+```
+
+#### Notes
+
+- Replace `container_port` with the port the application listens on.
+- If you set `SERVER_PORT` as an environment variable inside the container, it must match the container port used in
+  `-p host_port:container_port` (the `-p` mapping controls host-to-container networking).
+- `-p host_port:container_port` maps a host port to the container port. Example: `-p 8080:8080`.
+- `--restart unless-stopped` means the container will restart on Docker daemon restarts and on crashes, but it will
+  **not** restart if you manually stopped it.
+
+When the container needs to access services on the host, replace `localhost` with `host.docker.internal` wherever necessary
 
 ---
 
