@@ -4,12 +4,12 @@ import it.vrad.motivational.telegram.bot.config.properties.LogProperties;
 import it.vrad.motivational.telegram.bot.core.dispatch.impl.UpdateDispatcherImpl;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.impl.TelegramIntegrationApiImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import static org.mockito.Mockito.mock;
 
-@Configuration
+@TestConfiguration
 @EnableConfigurationProperties(LogProperties.class)
 public class TelegramApiImplTestConfig{
 

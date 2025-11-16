@@ -14,7 +14,7 @@ import it.vrad.motivational.telegram.bot.infrastructure.persistence.mapper.Phras
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.mapper.TelegramFileToTelegramFileDtoMapperImpl;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.mapper.UserPhraseToUserPhraseDtoMapperImpl;
 import it.vrad.motivational.telegram.bot.infrastructure.persistence.mapper.UserToUserDtoMapperImpl;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -40,7 +40,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test UserDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             UserDaoImpl.class,
             UserToUserDtoMapperImpl.class,
@@ -54,7 +54,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test TelegramFileDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             TelegramFileDaoImpl.class,
             TelegramFileToTelegramFileDtoMapperImpl.class
@@ -67,7 +67,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test PhraseSentHistoryDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             PhraseSentHistoryDaoImpl.class,
             PhraseSentHistoryToPhraseSentHistoryDtoMapperImpl.class
@@ -80,7 +80,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test AuthorDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             AuthorDaoImpl.class,
             AuthorToAuthorDtoMapperImpl.class,
@@ -94,7 +94,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test PhraseDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             PhraseDaoImpl.class,
             PhraseToPhraseDtoMapperImpl.class,
@@ -108,7 +108,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test CooldownDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             CooldownDaoImpl.class,
             CooldownToCooldownDtoMapperImpl.class
@@ -121,7 +121,7 @@ public class DaoTestConfig {
      * <p>
      * Import only the beans needed to test UserPhraseDaoImpl.
      */
-    @Configuration
+    @TestConfiguration
     @Import({
             UserPhraseDaoImpl.class,
             UserPhraseToUserPhraseDtoMapperImpl.class
