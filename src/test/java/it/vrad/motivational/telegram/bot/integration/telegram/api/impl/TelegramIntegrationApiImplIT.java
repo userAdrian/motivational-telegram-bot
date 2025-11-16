@@ -2,8 +2,6 @@ package it.vrad.motivational.telegram.bot.integration.telegram.api.impl;
 
 import it.vrad.motivational.telegram.bot.config.properties.TelegramProperties;
 import it.vrad.motivational.telegram.bot.infrastructure.exception.constants.ExceptionMessageConstants;
-import it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants;
-import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import it.vrad.motivational.telegram.bot.infrastructure.testutil.FileTestUtility;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.TelegramApiRequestTestFactory;
 import it.vrad.motivational.telegram.bot.integration.telegram.api.TelegramIntegrationTestConfig;
@@ -18,6 +16,8 @@ import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Fil
 import it.vrad.motivational.telegram.bot.integration.telegram.model.response.Message;
 import it.vrad.motivational.telegram.bot.integration.telegram.util.TelegramApiRequestUtility;
 import it.vrad.motivational.telegram.bot.integration.util.BaseRestMockTest;
+import it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants;
+import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -41,8 +41,8 @@ import static it.vrad.motivational.telegram.bot.integration.telegram.api.constan
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_PHOTO_RESPONSE_200_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_PHRASE_REQUEST_200_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_PHRASE_RESPONSE_200_PATH;
-import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_SIMPLE_MESSAGE_REQUEST_400_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_SIMPLE_MESSAGE_REQUEST_200_PATH;
+import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_SIMPLE_MESSAGE_REQUEST_400_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_SIMPLE_MESSAGE_RESPONSE_200_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.SEND_SIMPLE_MESSAGE_RESPONSE_400_PATH;
 import static it.vrad.motivational.telegram.bot.integration.telegram.api.constants.TelegramTestConstants.TELEGRAM_FILE_ID;
@@ -69,7 +69,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>
  * Each section is grouped and commented for clarity. Helper methods are at the bottom.
  */
-@SpringBootTest
+@RestClientTest(TelegramIntegrationApiImpl.class)
 @ContextConfiguration(classes = TelegramIntegrationTestConfig.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TelegramIntegrationApiImplIT extends BaseRestMockTest {
