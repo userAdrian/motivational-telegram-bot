@@ -1,0 +1,69 @@
+# Spring Boot application properties for test environment
+
+# -------------------- SERVER CONFIGURATION --------------------
+server:
+  port: 8090
+
+spring:
+  data:
+    # -------------------- REDIS CONFIGURATION --------------------
+    redis:
+      # Redis server connection details for caching
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      username:
+      password:
+
+  # -------------------- REDISSON CONFIGURATION --------------------
+  redis:
+    redisson:
+      # Redisson configuration file for distributed locks
+      file: classpath:config/redisson-test.yaml
+
+  # -------------------- DATABASE CONFIGURATION --------------------
+  jpa:
+    # H2 in-memory database configuration for development and testing
+    defer-datasource-initialization: true
+
+  # -------------------- IMPORT ADDITIONAL CONFIGURATION --------------------
+  config:
+    # Import page and API configuration files
+    import: classpath:config/api-test.yml, classpath:config/pages-test.yml
+
+motivational:
+  telegram:
+    bot:
+      configuration:
+        # -------------------- LOGGING CONFIGURATION --------------------
+        log:
+          # Maximum request/response body length to log (in bytes)
+          max-request-length: 4096
+          max-response-length: 4096
+
+        # -------------------- PHRASE SCHEDULER CONFIGURATION --------------------
+        phrase:
+          # Times (HH:mm:ss) when phrases should be sent (comma-separated)
+          sending-times: 14:47:00,14:48:00,14:49:00
+          # Time zone for phrase scheduling
+          time-zone: Europe/Rome
+          # Number of seconds to add to the delay before processing the next user after each integration error
+          # (e.g. if delay=0 -> 1st sleepTime=30s, 2nd 60s, etc.)
+          scheduler-delay-increment: 30
+          # Maximum duration (in seconds) allowed for a single delay interval before proceeding
+          scheduler-max-delay: 600
+          # Maximum time (seconds) to lease the lock
+          scheduler-lock-lease-time: 600
+
+        # -------------------- COOLDOWN CONFIGURATION --------------------
+        cooldown:
+          # Cooldown durations for commands (ISO-8601 format, e.g. PT6H = 6 hours)
+          cooldown-duration-map:
+            RANDOM_PHRASE: PT6H
+
+        # -------------------- COMMAND AUTHORIZATION CONFIGURATION --------------------
+        command:
+          # Command authorization map (format: command-text=UserRoleSet)
+          auth-roles-map:
+            /loadfilephrases: ADMIN
+          # Command cooldown skipping roles
+          skip-cooldown-roles: ADMIN

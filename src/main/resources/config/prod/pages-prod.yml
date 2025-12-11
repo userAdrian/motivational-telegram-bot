@@ -1,0 +1,40 @@
+# Page configuration for production environment
+
+motivational:
+  telegram:
+    bot:
+      configuration:
+        page:
+          # Maximum number of buttons per row on a page
+          maxButtonsPerRow: 2
+          # Character used to split button coordinates (row:col)
+          button-coordinate-split-character: ':'
+          # Button coordinates for each page and button (format: pageReference.buttonName=ROW:COL)
+          page-buttons-configuration-map:
+            page_InitialPage:
+              ADMIN: '0:0'
+              INFO: '1:0'
+              STATISTICS: '1:1'
+            page_InfoPage:
+              PREVIOUS: '0:0'
+            page_StatisticsPage:
+              PREVIOUS: '0:0'
+            page_AdminPage:
+              LOAD_FILE_PHRASES: '0:0'
+              PREVIOUS: '1:0'
+          # Allowed roles for each button (comma-separated list). All pages and buttons should have one (format: pageReference.buttonName=roleList)
+          page-buttons-allowed-roles-map:
+            page_InitialPage:
+              ADMIN: ADMIN
+              INFO: ALL
+              STATISTICS: ALL
+            page_InfoPage:
+              PREVIOUS: ALL
+            page_StatisticsPage:
+              PREVIOUS: ALL
+            page_AdminPage:
+              LOAD_FILE_PHRASES: ALL
+              PREVIOUS: ALL
+          # Allowed roles for each page (comma-separated list) (format: pageReference=roleList)
+          page-allowed-roles-map:
+            page_AdminPage: ADMIN

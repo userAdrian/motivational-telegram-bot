@@ -1,0 +1,78 @@
+# Spring Boot application properties for production environment
+
+# -------------------- SERVER CONFIGURATION --------------------
+server:
+  port: ${SERVER_PORT:8081}
+
+# -------------------- SPRING CONFIGURATION --------------------
+spring:
+  data:
+    # -------------------- REDIS CONFIGURATION --------------------
+    redis:
+      # Redis server connection details for caching
+      repositories:
+        enabled: false
+      host: redis-18995.c135.eu-central-1-1.ec2.redns.redis-cloud.com
+      port: 18995
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+
+  # -------------------- REDISSON CONFIGURATION --------------------
+  redis:
+    redisson:
+      # Redisson configuration file for distributed locks
+      file: classpath:config/prod/redisson-prod.yaml
+
+  # -------------------- DATABASE CONFIGURATION --------------------
+  datasource:
+    # PostgreSQL database configuration for production
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  # -------------------- IMPORT ADDITIONAL CONFIGURATIONS --------------------
+  config:
+    # Import page and API configuration files
+    import: classpath:config/prod/api-prod.yml, classpath:config/prod/pages-prod.yml
+
+# -------------------- APP CONFIGURATION --------------------
+motivational:
+  telegram:
+    bot:
+      configuration:
+        # -------------------- LOGGING CONFIGURATION --------------------
+        log:
+          # Maximum request/response body length to log (in bytes)
+          max-request-length: 4096
+          max-response-length: 4096
+
+        # -------------------- PHRASE SCHEDULER CONFIGURATION --------------------
+        phrase:
+          # Times (HH:mm:ss) when phrases should be sent (comma-separated)
+          sending-times: 15:07:30,15:07:00,15:08:00
+          # Time zone for phrase scheduling
+          time-zone: Europe/Rome
+          # Number of seconds to add to the delay before processing the next user after each integration error
+          # (e.g. if delay=0 -> 1st sleepTime=30s, 2nd 60s, etc.)
+          scheduler-delay-increment: 30
+          # Maximum duration (in seconds) allowed for a single delay interval before proceeding
+          scheduler-max-delay: 600
+          # Maximum time (seconds) to lease the lock
+          scheduler-lock-lease-time: 600
+
+        # -------------------- COOLDOWN CONFIGURATION --------------------
+        cooldown:
+          # Cooldown durations for commands (ISO-8601 format, e.g. PT6H = 6 hours)
+          cooldown-duration-map:
+            RANDOM_PHRASE: PT6H
+
+        # -------------------- COMMAND AUTHORIZATION CONFIGURATION --------------------
+        command:
+          # Command authorization map (format: command-text=UserRoleSet)
+          auth-roles-map:
+            /loadfilephrases: ADMIN
+          # Command cooldown skipping roles
+          skip-cooldown-roles: ADMIN

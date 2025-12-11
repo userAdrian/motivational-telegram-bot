@@ -1,0 +1,11 @@
+# Main Spring Boot application properties
+
+spring:
+  profiles:
+    active: test
+  application:
+    name: motivational-telegram-bot
+
+  # Message resource bundle base name
+  messages:
+    basename: messages
