@@ -18,7 +18,6 @@ import it.vrad.motivational.telegram.bot.integration.telegram.util.TelegramApiRe
 import it.vrad.motivational.telegram.bot.integration.util.BaseRestMockTest;
 import it.vrad.motivational.telegram.bot.shared.test.constants.PersistenceTestConstants;
 import it.vrad.motivational.telegram.bot.shared.test.util.factory.PersistenceTestFactory;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -71,11 +70,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 @RestClientTest(TelegramIntegrationApiImpl.class)
 @ContextConfiguration(classes = TelegramIntegrationTestConfig.class)
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TelegramIntegrationApiImplIT extends BaseRestMockTest {
 
     private final TelegramProperties telegramProperties;
+    private final TelegramProperties.Endpoints endpoints;
     private final TelegramIntegrationApiImpl telegramIntegrationApi;
+
+    @Autowired
+    TelegramIntegrationApiImplIT(
+            TelegramProperties telegramProperties,
+            TelegramIntegrationApiImpl telegramIntegrationApi
+    ) {
+        this.telegramProperties = telegramProperties;
+        this.endpoints = telegramProperties.getEndpoints();
+        this.telegramIntegrationApi = telegramIntegrationApi;
+    }
 
     // --------------------------------------
     // SendMessage and SendSimpleMessage API tests
@@ -94,7 +103,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
             SendMessageRequest request = TelegramApiRequestTestFactory.createSendMessageRequest();
 
             mockSuccessfulJsonResponse(
-                    telegramProperties.getUrlSendMessage(),
+                    endpoints.getSendMessage(),
                     HttpMethod.POST,
                     SEND_MESSAGE_REQUEST_200_PATH,
                     SEND_MESSAGE_RESPONSE_200_PATH
@@ -103,14 +112,14 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
             Message message = telegramIntegrationApi.sendMessage(request);
             assertThat(getChatId(message)).isEqualTo(CHAT_ID);
             assertThat(message.getText()).isEqualTo(request.getText());
-            verifyHttpRequestCount(1, telegramProperties.getUrlSendMessage());
+            verifyHttpRequestCount(1, endpoints.getSendMessage());
         }
 
         @Test
         @DisplayName("sendSimpleMessage should return a Message when the request is valid")
         void sendSimpleMessage_whenValidRequest_returnsMessage() {
             mockSuccessfulJsonResponse(
-                    telegramProperties.getUrlSendMessage(),
+                    endpoints.getSendMessage(),
                     HttpMethod.POST,
                     SEND_SIMPLE_MESSAGE_REQUEST_200_PATH,
                     SEND_SIMPLE_MESSAGE_RESPONSE_200_PATH
@@ -120,13 +129,13 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
 
             assertThat(getChatId(message)).isEqualTo(CHAT_ID);
             assertThat(message.getText()).isEqualTo(TEXT_MESSAGE);
-            verifyHttpRequestCount(1, telegramProperties.getUrlSendMessage());
+            verifyHttpRequestCount(1, endpoints.getSendMessage());
         }
 
         @Test
         @DisplayName("sendSimpleMessage should throw IntegrationApiException when HTTP fails")
         void sendSimpleMessage_whenHttpFails_throwsIntegrationApiException() {
-            String api = telegramProperties.getUrlSendMessage();
+            String api = endpoints.getSendMessage();
             mockFailedJsonResponse(
                     api,
                     HttpMethod.POST,
@@ -149,7 +158,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
         @Test
         @DisplayName("sendSimpleMessage should throw IntegrationApiException on generic failure")
         void sendSimpleMessage_whenGenericFail_throwsIntegrationApiException() {
-            String api = telegramProperties.getUrlSendMessage();
+            String api = endpoints.getSendMessage();
             mockFailedResponse(
                     api,
                     HttpMethod.POST,
@@ -176,7 +185,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
     public void sendPhrase_whenValidRequest_returnsMessage() {
         // Test sending a phrase with a valid request
         mockSuccessfulJsonResponse(
-                telegramProperties.getUrlSendMessage(),
+                endpoints.getSendMessage(),
                 HttpMethod.POST,
                 SEND_PHRASE_REQUEST_200_PATH,
                 SEND_PHRASE_RESPONSE_200_PATH
@@ -184,7 +193,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
         Message message = telegramIntegrationApi.sendPhrase(CHAT_ID, PersistenceTestFactory.createGenericPhraseDto());
         assertThat(getChatId(message)).isEqualTo(CHAT_ID);
         assertThat(message.getText()).isEqualTo(PersistenceTestConstants.PHRASE_TEXT);
-        verifyHttpRequestCount(1, telegramProperties.getUrlSendMessage());
+        verifyHttpRequestCount(1, endpoints.getSendMessage());
     }
 
     // --------------------------------------
@@ -207,7 +216,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
     private void sendPhotoSuccessTest(boolean withFile) {
         SendPhotoRequest request = TelegramApiRequestTestFactory.createSendPhotoRequest(withFile);
         mockSuccessfulJsonResponse(
-                telegramProperties.getUrlSendPhoto(),
+                endpoints.getSendPhoto(),
                 HttpMethod.POST,
                 request.asMultiValueMap(),
                 SEND_PHOTO_RESPONSE_200_PATH
@@ -217,7 +226,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
         assertThat(message.getCaption()).isEqualTo(TEXT_MESSAGE);
         assertThat(message.getReplyMarkup()).isEqualTo(request.getReplyMarkup());
         assertTrue(CollectionUtils.isNotEmpty(message.getPhoto()), "Return photo array should be filled");
-        verifyHttpRequestCount(1, telegramProperties.getUrlSendPhoto());
+        verifyHttpRequestCount(1, endpoints.getSendPhoto());
     }
 
     // --------------------------------------
@@ -230,7 +239,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
         EditMessageMediaRequest request = TelegramApiRequestTestFactory.createEditMessageMediaPhotoRequest(mediaType);
 
         mockSuccessfulJsonResponse(
-                telegramProperties.getUrlEditMessageMedia(),
+                endpoints.getEditMessageMedia(),
                 HttpMethod.POST,
                 request.asMultiValueMap(),
                 EDIT_MESSAGE_MEDIA_RESPONSE_200_PATH
@@ -240,7 +249,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
         assertThat(getChatId(message)).isEqualTo(CHAT_ID);
         assertThat(message.getCaption()).isEqualTo(TEXT_MESSAGE);
         assertTrue(CollectionUtils.isNotEmpty(message.getPhoto()), "Return photo array should be filled");
-        verifyHttpRequestCount(1, telegramProperties.getUrlEditMessageMedia());
+        verifyHttpRequestCount(1, endpoints.getEditMessageMedia());
     }
 
     // --------------------------------------
@@ -250,7 +259,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
     @DisplayName("answerCallbackQuery should return a true when the request is valid")
     public void answerCallbackQuery_whenValidRequest_returnsTrue() {
         mockSuccessfulJsonResponse(
-                telegramProperties.getUrlAnswerCallbackQuery(),
+                endpoints.getAnswerCallbackQuery(),
                 HttpMethod.POST,
                 ANSWER_CALLBACK_QUERY_REQUEST_200_PATH,
                 ANSWER_CALLBACK_QUERY_RESPONSE_200_PATH
@@ -260,7 +269,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
 
         Boolean result = telegramIntegrationApi.answerCallbackQuery(request);
         assertTrue(result);
-        verifyHttpRequestCount(1, telegramProperties.getUrlAnswerCallbackQuery());
+        verifyHttpRequestCount(1, endpoints.getAnswerCallbackQuery());
     }
 
     // --------------------------------------
@@ -274,7 +283,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
 
         File file = telegramIntegrationApi.getFile(request);
         assertThat(file.getFileId()).isEqualTo(TELEGRAM_FILE_ID);
-        verifyHttpRequestCount(1, telegramProperties.getUrlGetFile());
+        verifyHttpRequestCount(1, endpoints.getGetFile());
     }
 
     // --------------------------------------
@@ -298,7 +307,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
 
         byte[] result = telegramIntegrationApi.downloadFile(TelegramApiRequestTestFactory.createGetFileRequest());
         assertThat(result).isEqualTo(FileTestUtility.readBytesFromResource(TEST_PHOTO_PATH));
-        verifyHttpRequestCount(1, telegramProperties.getUrlGetFile());
+        verifyHttpRequestCount(1, endpoints.getGetFile());
         verifyHttpRequestCount(1, composeDownloadFileUrl());
     }
 
@@ -308,7 +317,7 @@ class TelegramIntegrationApiImplIT extends BaseRestMockTest {
 
     private void mockSuccessfulGetFile() {
         mockSuccessfulJsonResponse(
-                telegramProperties.getUrlGetFile(),
+                endpoints.getGetFile(),
                 HttpMethod.POST,
                 GET_FILE_REQUEST_200_PATH,
                 GET_FILE_RESPONSE_200_PATH

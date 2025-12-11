@@ -12,12 +12,17 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "motivational.telegram.bot.telegram")
 @Component
 public class TelegramProperties {
-    private String token;
     private String baseUrl;
     private String baseFileUrl;
-    private String urlSendMessage;
-    private String urlSendPhoto;
-    private String urlEditMessageMedia;
-    private String urlAnswerCallbackQuery;
-    private String urlGetFile;
+    private Endpoints endpoints;
+
+    @Data
+    public static class Endpoints {
+        private String sendMessage;
+        private String sendPhoto;
+        private String editMessageMedia;
+        private String answerCallbackQuery;
+        private String getFile;
+    }
+
 }

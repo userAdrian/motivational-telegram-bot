@@ -26,6 +26,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
 
     private final TelegramRestTemplate telegramRestTemplate;
     private final TelegramProperties telegramProperties;
+    private final TelegramProperties.Endpoints endpoints;
 
     public TelegramIntegrationApiImpl(
             TelegramRestTemplate telegramRestTemplate,
@@ -33,6 +34,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
     ) {
         this.telegramRestTemplate = telegramRestTemplate;
         this.telegramProperties = telegramProperties;
+        this.endpoints = telegramProperties.getEndpoints();
     }
 
     /**
@@ -59,7 +61,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
     public Message sendMessage(SendMessageRequest request) {
         // Send a message using the Telegram API endpoint
         return messagePostRequest(
-                telegramProperties.getUrlSendMessage(),
+                endpoints.getSendMessage(),
                 TelegramApiRequestUtility.getHttpEntityJson(request),
                 request.getChatId()
         );
@@ -93,7 +95,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
     public Message sendPhoto(SendPhotoRequest request) {
         // Send a photo using the Telegram API endpoint
         return messagePostRequest(
-                telegramProperties.getUrlSendPhoto(),
+                endpoints.getSendPhoto(),
                 TelegramApiRequestUtility.getHttpEntityMultipart(request.asMultiValueMap()),
                 request.getChatId()
         );
@@ -109,7 +111,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
     public Message editMessageMedia(EditMessageMediaRequest request) {
         // Edit the media content of a message
         return messagePostRequest(
-                telegramProperties.getUrlEditMessageMedia(),
+                endpoints.getEditMessageMedia(),
                 TelegramApiRequestUtility.getHttpEntityMultipart(request.asMultiValueMap()),
                 request.getChatId()
         );
@@ -126,7 +128,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
         // Answer a callback query using the Telegram API endpoint
         return telegramRestTemplate.performExchange(
                 HttpMethod.POST,
-                telegramProperties.getUrlAnswerCallbackQuery(),
+                endpoints.getAnswerCallbackQuery(),
                 TelegramApiRequestUtility.getHttpEntityJson(callbackQueryAnswerRequest),
                 new ParameterizedTypeReference<>() {
                 },
@@ -145,7 +147,7 @@ public class TelegramIntegrationApiImpl implements TelegramIntegrationApi {
         // Retrieve a file from Telegram using the API endpoint
         return telegramRestTemplate.performExchange(
                 HttpMethod.POST,
-                telegramProperties.getUrlGetFile(),
+                endpoints.getGetFile(),
                 TelegramApiRequestUtility.getHttpEntityJson(getFileRequest),
                 new ParameterizedTypeReference<>() {
                 },

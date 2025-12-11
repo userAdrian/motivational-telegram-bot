@@ -1,0 +1,27 @@
+# Telegram bot API configuration for test environment
+
+telegram:
+  # Telegram bot api proxy (uses WireMock dynamic port)
+  api-proxy: http://localhost:${wiremock.server.port}
+  # Telegram bot token (value useless during testing)
+  bot-token: TOKEN_PLACEHOLDER
+
+motivational:
+  telegram:
+    bot:
+      telegram:
+        # Base URL for Telegram Bot API endpoints (uses the bot token)
+        base-url: ${telegram.api-proxy}/bot${telegram.bot-token}
+        # Base URL for Telegram file downloads (uses the bot token)
+        base-file-url: ${telegram.api-proxy}/file/bot${telegram.bot-token}
+        endpoints:
+          # URL for sending messages via Telegram API
+          send-message: ${motivational.telegram.bot.telegram.base-url}/sendMessage
+          # URL for sending photos via Telegram API
+          send-photo: ${motivational.telegram.bot.telegram.base-url}/sendPhoto
+          # URL for editing message media via Telegram API
+          edit-message-media: ${motivational.telegram.bot.telegram.base-url}/editMessageMedia
+          # URL for answering callback queries via Telegram API
+          answer-callback-query: ${motivational.telegram.bot.telegram.base-url}/answerCallbackQuery
+          # URL for retrieving files via Telegram API
+          get-file: ${motivational.telegram.bot.telegram.base-url}/getFile
